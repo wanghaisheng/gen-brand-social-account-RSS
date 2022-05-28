@@ -20,7 +20,7 @@ def downloadvideosfromchannel(url, videodir):
         # 'proxy': 'socks5://127.0.0.1:1080'
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(URL, download=False)
+        info = ydl.extract_info(URL, download=True)
         with open(channeid+'.json', 'w', encoding='utf8') as f:
             f.write(json.dumps(ydl.sanitize_info(info)))
 
