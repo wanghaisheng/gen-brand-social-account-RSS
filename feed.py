@@ -16,7 +16,7 @@ def downloadvideosfromchannel(url, videodir):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     ydl_opts = {
         'outtmpl': videodir+'/%(id)s'+'.mp4',
-        'format': 'bestvideo[height<=%d][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<=%d][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(480,480),
+        'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(480,480),
         # 'proxy': 'socks5://127.0.0.1:1080'
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
