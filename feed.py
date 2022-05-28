@@ -16,13 +16,13 @@ def downloadvideosfromchannel(url, videodir):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     ydl_opts = {
         'outtmpl': videodir+'/%(id)s'+'.mp4',
-        'format': 'best',
+        'format': 'bestvideo[height<=%d][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<=%d][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(480,480),
         # 'proxy': 'socks5://127.0.0.1:1080'
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(URL, download=True)
-        with open(channeid+'.json', 'w', encoding='utf8') as f:
-            f.write(json.dumps(ydl.sanitize_info(info)))
+#         with open(channeid+'.json', 'w', encoding='utf8') as f:
+#             f.write(json.dumps(ydl.sanitize_info(info)))
 
         fg = FeedGenerator()
         fg.load_extension('podcast')
