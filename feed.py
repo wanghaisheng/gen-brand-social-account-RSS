@@ -21,28 +21,30 @@ def downloadvideosfromchannel(url, videodir):
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(URL, download=False)
-        # with open('t.json', 'w', encoding='utf8') as f:
-            # f.write(json.dumps(ydl.sanitize_info(info)))
+        with open(channeid+'.json', 'w', encoding='utf8') as f:
+            f.write(json.dumps(ydl.sanitize_info(info)))
 
         fg = FeedGenerator()
         fg.load_extension('podcast')
-
+        fg.title(info['channel'])
+        fg.link(href=info['uploader_url'])
+        fg.description(info['uploader'])
         fg.podcast.itunes_author = info['uploader']
         fg.podcast.itunes_block = 'yes'
-        fg.podcast.itunes_image = info['thumbnail']
+        fg.podcast.itunes_image = info['thumbnails'][0]['url']
         fg.podcast.itunes_explicit = 'no'
         fg.podcast.itunes_complete = None
         fg.podcast.itunes_new_feed_url = None
         fg.podcast.itunes_owner = None
         fg.podcast.itunes_subtitle = info['uploader']
         fg.podcast.itunes_summary = None
-        fg.podcast.itunes_category(','.join(info['categories']))
-        fg.podcast.channel_title(info['channel'])
+        fg.podcast.itunes_category(','.join(info['entries'][0]['categories']))
+        # fg.podcast.channel_title(info['channel'])
         for idx,entry in enumerate(info['entries']):
             fe = fg.add_entry()
             fe.id(entry['id'])
             fe.title(entry['title'])
-            fe.link(entry['webpage_url'])
+            fe.link(href=entry['webpage_url'])
             fe.description(entry['description'])
             fe.enclosure(yourowndomain+entry['id']+'.mp4', 0, 'video/mp4')
 
@@ -62,6 +64,7 @@ def downloadvideosfromchannel(url, videodir):
 
         fg.rss_str(pretty=True)
         fg.rss_file(channeid+'.xml')
+
 
 if not os.path.exists(channeid):
     os.mkdir(channeid)
