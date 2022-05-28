@@ -1,6 +1,19 @@
 # turn-youtube-podcast-rss
 
 
+
+run on your local machine 
+
+docker build 
+docker run 
+
+
+https://user-images.githubusercontent.com/2363295/170819288-fa90b35d-f3b5-4c5c-9f17-4cdc80a680ac.mp4
+
+
+
+
+
 # podcast-upload-publish-auto
 
 
