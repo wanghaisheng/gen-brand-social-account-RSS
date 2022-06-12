@@ -22,6 +22,10 @@ https://user-images.githubusercontent.com/2363295/170819288-fa90b35d-f3b5-4c5c-9
 
 forget about API key,git and docker, just click the app icon on your desktop in a very lazy way
 
+## batch channel support
+you can submit a csv file specified more than one video url or channel url
+
+
 ## multiple video  source support
 
 * youtube
