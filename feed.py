@@ -31,7 +31,8 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
             downloadVideo=True
         try:
             info = ydl.extract_info(URL, download=downloadVideo)
-
+            with open(channeid+'.json', 'w', encoding='utf8') as f:
+                f.write(json.dumps(ydl.sanitize_info(info)))
             fg.title(info['channel'])
             fg.link(href=info['uploader_url'])
             fg.description(info['uploader'])
