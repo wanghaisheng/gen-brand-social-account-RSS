@@ -8,9 +8,9 @@ import os
 # URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
 URL = os.getenv('URL')
 downloadVideo = os.getenv('downloadVideo')
-
 channeid=URL.replace('https://youtube.com/channel/','')
-if '/' in channeid:
+
+if channeid.endswith("/"):
     channeid=URL.replace('/','')
 
 # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
