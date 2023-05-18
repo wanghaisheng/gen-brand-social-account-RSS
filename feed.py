@@ -74,8 +74,9 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
 
-#         with open(channeid+'.json', 'w', encoding='utf8') as f:
-#             f.write(json.dumps(ydl.sanitize_info(info)))
+            fg.title('')
+            fg.link(href=URL)
+            fg.description('')
         fg.rss_file(channeid+'.xml')
 if not os.path.exists(channeid):
     os.mkdir(channeid)
