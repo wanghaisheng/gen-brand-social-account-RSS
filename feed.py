@@ -25,7 +25,6 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
         # 'proxy': 'socks5://127.0.0.1:1080'
     }
     fg = FeedGenerator()
-    fg.load_extension('podcast')    
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         if not downloadVideo:
             downloadVideo=True
@@ -34,6 +33,8 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
             print(json.dumps(ydl.sanitize_info(info)))
             with open(channeid+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
+            fg.load_extension('podcast')    
+                
             fg.title(info['channel'])
             fg.link(href=info['uploader_url'])
             fg.description(info['uploader'])
