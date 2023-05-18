@@ -23,7 +23,7 @@ jobs:
     - name: Download ffmpeg for Linux
       shell: bash
 #       working-directory: ${{ runner.temp }}
-      run: ffmpeg-Linux.sh
+      run: ./ffmpeg-Linux.sh
 
     - name: Install dependencies
       run: |
