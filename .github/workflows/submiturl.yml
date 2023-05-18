@@ -21,7 +21,7 @@ jobs:
         python-version: 3.11
     - name: Download ffmpeg for Linux
 
-      run: sudo apt update; sudo apt-get install libxml2-dev libxslt-dev;pip install lxml;sudo apt install -y ffmpeg 
+      run: sudo apt update; sudo apt-get install libxml2-dev libxslt1-dev python-lxml;sudo apt install -y ffmpeg 
 
     - name: Install dependencies
       run: |
