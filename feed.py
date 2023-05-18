@@ -10,8 +10,6 @@ URL = os.getenv('URL')
 downloadVideo = os.getenv('downloadVideo')
 channeid=URL.replace('https://youtube.com/channel/','')
 
-if channeid.endswith("/"):
-    channeid=URL.replace('/','')
 
 # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
 yourowndomain = 'https://n0nft.com/'+channeid+'/'
@@ -78,6 +76,10 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
             fg.link(href=URL)
             fg.description('xxxx')
         fg.rss_file(channeid+'.xml')
+
+if channeid.endswith("/"):
+    channeid=URL.replace('/','')
+print("start processing---\n",channelid)    
 if not os.path.exists(channeid):
     os.mkdir(channeid)
 downloadvideosfromchannel(URL,downloadVideo, './'+channeid)
