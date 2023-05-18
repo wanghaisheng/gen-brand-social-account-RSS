@@ -9,6 +9,10 @@ on:
         description: 'YouTube Channel URL'
         type: enviroment
         required: true
+      downloadVideo:
+        description: 'true or false'
+        type: bool
+        required: false
 
 jobs:
   build-ubuntu:
