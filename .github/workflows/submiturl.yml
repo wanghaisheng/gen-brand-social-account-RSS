@@ -22,7 +22,7 @@ jobs:
         python-version: 3.11
     - name: Download ffmpeg for Linux
 
-      run: sudo apt update; pkg install libxml2 libxslt;sudo apt install -y libicu-dev ffmpeg 
+      run: sudo apt update; sudo apt-get install libxml2-dev libxslt-dev;sudo apt install -y libicu-dev ffmpeg 
 
     - name: Install dependencies
       run: |
