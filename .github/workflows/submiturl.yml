@@ -21,9 +21,8 @@ jobs:
       with:
         python-version: 3.11
     - name: Download ffmpeg for Linux
-      shell: bash
-#       working-directory: ${{ runner.temp }}
-      run: sudo bash ffmpeg-Linux.sh
+
+      run: sudo apt update; sudo apt install -y libicu-dev ffmpeg 
 
     - name: Install dependencies
       run: |
