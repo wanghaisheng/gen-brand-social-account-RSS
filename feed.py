@@ -67,12 +67,12 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
                 fe.itunes_episode = None
                 fe.itunes_title = entry['fulltitle']
                 fe.itunes_episode_type = None
+            fg.rss_str(pretty=True)                
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
 
 #         with open(channeid+'.json', 'w', encoding='utf8') as f:
 #             f.write(json.dumps(ydl.sanitize_info(info)))
-        fg.rss_str(pretty=True)
         fg.rss_file(channeid+'.xml')
 if not os.path.exists(channeid):
     os.mkdir(channeid)
