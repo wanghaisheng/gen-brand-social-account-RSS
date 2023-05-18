@@ -7,6 +7,8 @@ import os
 # URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
 # URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
 URL = os.getenv('URL')
+downloadVideo = os.getenv('downloadVideo')
+
 channeid=URL.replace('https://youtube.com/channel/','')
 if '/' in channeid:
     channeid=URL.replace('/','')
@@ -23,7 +25,9 @@ def downloadvideosfromchannel(url, videodir):
         # 'proxy': 'socks5://127.0.0.1:1080'
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(URL, download=True)
+        if not downloadVideo:
+            downloadVideo=True
+        info = ydl.extract_info(URL, download=downloadVideo)
 #         with open(channeid+'.json', 'w', encoding='utf8') as f:
 #             f.write(json.dumps(ydl.sanitize_info(info)))
 
