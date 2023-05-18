@@ -79,7 +79,7 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
 
 if channeid.endswith("/"):
     channeid=URL.replace('/','')
-print("start processing---\n",channelid)    
+print("start processing---\n",channeid)    
 if not os.path.exists(channeid):
     os.mkdir(channeid)
 downloadvideosfromchannel(URL,downloadVideo, './'+channeid)
