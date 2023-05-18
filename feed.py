@@ -9,7 +9,6 @@ import os
 URL = os.getenv('URL')
 downloadVideo = os.getenv('downloadVideo')
 
-yourowndomain = 'https://n0nft.com/'+channeid+'/'
 
 
 def downloadvideosfromchannel(url, downloadVideo,videodir):
