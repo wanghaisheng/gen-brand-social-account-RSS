@@ -68,11 +68,8 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
                 fe.itunes_title = entry['fulltitle']
                 fe.itunes_episode_type = None
         except Exception as e:  # skipcq: PYL-W0703
-            log.debug(e)
-            print(
-                f"Failed to download {song.get('name')}, make sure yt_dlp is up to date"
-            )
-            continue
+            print(e)
+
 #         with open(channeid+'.json', 'w', encoding='utf8') as f:
 #             f.write(json.dumps(ydl.sanitize_info(info)))
         fg.rss_str(pretty=True)
