@@ -30,23 +30,24 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
         info = ydl.extract_info(URL, download=downloadVideo)
 #         with open(channeid+'.json', 'w', encoding='utf8') as f:
 #             f.write(json.dumps(ydl.sanitize_info(info)))
-        if len(info['entries'])!==0:
-            fg = FeedGenerator()
-            fg.load_extension('podcast')
-            fg.title(info['channel'])
-            fg.link(href=info['uploader_url'])
-            fg.description(info['uploader'])
-            fg.podcast.itunes_author = info['uploader']
-            fg.podcast.itunes_block = 'yes'
-            fg.podcast.itunes_image = info['thumbnails'][0]['url']
-            fg.podcast.itunes_explicit = 'no'
-            fg.podcast.itunes_complete = None
-            fg.podcast.itunes_new_feed_url = None
-            fg.podcast.itunes_owner = None
-            fg.podcast.itunes_subtitle = info['uploader']
-            fg.podcast.itunes_summary = None
-            fg.podcast.itunes_category(','.join(info['entries'][0]['categories']))
-            # fg.podcast.channel_title(info['channel'])
+        fg = FeedGenerator()
+        fg.load_extension('podcast')
+        fg.title(info['channel'])
+        fg.link(href=info['uploader_url'])
+        fg.description(info['uploader'])
+        fg.podcast.itunes_author = info['uploader']
+        fg.podcast.itunes_block = 'yes'
+        fg.podcast.itunes_image = info['thumbnails'][0]['url']
+        fg.podcast.itunes_explicit = 'no'
+        fg.podcast.itunes_complete = None
+        fg.podcast.itunes_new_feed_url = None
+        fg.podcast.itunes_owner = None
+        fg.podcast.itunes_subtitle = info['uploader']
+        fg.podcast.itunes_summary = None
+        fg.podcast.itunes_category(','.join(info['entries'][0]['categories']))
+        # fg.podcast.channel_title(info['channel'])
+        if len(info['entries'])!=0:
+        
             for idx,entry in enumerate(info['entries']):
                 fe = fg.add_entry()
                 fe.id(entry['id'])
@@ -69,8 +70,8 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
                 fe.itunes_title = entry['fulltitle']
                 fe.itunes_episode_type = None
 
-            fg.rss_str(pretty=True)
-            fg.rss_file(channeid+'.xml')
+         fg.rss_str(pretty=True)
+         fg.rss_file(channeid+'.xml')
 
 
 if not os.path.exists(channeid):
