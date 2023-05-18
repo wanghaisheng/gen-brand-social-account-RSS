@@ -10,6 +10,7 @@ URL = os.getenv('URL')
 downloadVideo = os.getenv('downloadVideo')
 channeid=URL.replace('https://youtube.com/channel/','')
 
+print("after replace---\n",channeid)    
 
 # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
 yourowndomain = 'https://n0nft.com/'+channeid+'/'
