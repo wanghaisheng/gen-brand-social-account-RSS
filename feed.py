@@ -8,8 +8,11 @@ import os
 # URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
 URL = os.getenv('URL')
 channeid=URL.replace('https://youtube.com/channel/','')
+if '/' in channeid:
+    channeid=URL.replace('/','')
+
 # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-yourowndomain = 'https://distbit.loophole.site/'+channeid+'/'
+yourowndomain = 'https://n0nft.com/'+channeid+'/'
 
 
 def downloadvideosfromchannel(url, videodir):
