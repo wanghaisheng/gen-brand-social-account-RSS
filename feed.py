@@ -73,7 +73,7 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
             fg.link(href=URL)
             fg.description('xxxx')
         fg.rss_file(channeid+'.xml')
-if 'channel' in URL：
+if 'channel' in URL:
     channeid=URL.('https://youtube.com/channel/')[1]
 
     print("after replace---\n",channeid)    
