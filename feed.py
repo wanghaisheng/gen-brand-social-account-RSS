@@ -80,7 +80,7 @@ if 'channel' in URL:
 
     # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
     if channeid.endswith("/"):
-        channeid=URL.replace('/','')
+        channeid=channeid.replace('/','')
     print("start processing---\n",channeid)    
     if not os.path.exists(channeid):
         os.mkdir(channeid)
