@@ -17,7 +17,7 @@ if '/' in channeid:
 yourowndomain = 'https://n0nft.com/'+channeid+'/'
 
 
-def downloadvideosfromchannel(url, videodir):
+def downloadvideosfromchannel(url, downloadVideo,videodir):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     ydl_opts = {
         'outtmpl': videodir+'/%(id)s'+'.mp4',
@@ -75,4 +75,4 @@ def downloadvideosfromchannel(url, videodir):
 
 if not os.path.exists(channeid):
     os.mkdir(channeid)
-downloadvideosfromchannel(URL, './'+channeid)
+downloadvideosfromchannel(URL,downloadVideo, './'+channeid)
