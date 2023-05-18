@@ -74,9 +74,9 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
 
-            fg.title('')
+            fg.title('xxxx')
             fg.link(href=URL)
-            fg.description('')
+            fg.description('xxxx')
         fg.rss_file(channeid+'.xml')
 if not os.path.exists(channeid):
     os.mkdir(channeid)
