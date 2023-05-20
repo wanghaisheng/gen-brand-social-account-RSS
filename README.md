@@ -1,6 +1,11 @@
 # turn-youtube-podcast-rss
 
+## supported sites
 
+* youtube 
+* tiktok 
+* douyin 
+* kuaishou
 
 ## get rss url from input url 
 
