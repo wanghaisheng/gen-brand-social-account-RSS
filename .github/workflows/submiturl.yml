@@ -53,6 +53,8 @@ jobs:
       run: |
         git config --local user.email "ations@github.com"
         git config --local user.name "github"
+        git config --global http.postBuffer 157286400
+        
         git remote set-url origin "https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}"
     # 更新仓库
     - name: Update repo
