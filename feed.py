@@ -103,8 +103,9 @@ if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/@'))
 
         # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
         if cid.endswith("/"):
-            cid=cid.replace('/','')        
-    print("start processing---\n",cid)    
+            cid=cid.replace('/','')       
+        URL ="https://www.youtube.com/@"+cid            
+    print("start processing---\n",URL)    
     if not os.path.exists(cid):
         print('prepare dir:',cid)
         os.mkdir(cid)
