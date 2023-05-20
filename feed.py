@@ -10,7 +10,8 @@ import os
 URL = os.getenv('URL')
 Height = os.getenv('downloadVideoHeight')
 downloadVideo = os.getenv('downloadVideo')
-
+if not Height:
+    Height=480
 
 
 def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
