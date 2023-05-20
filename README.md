@@ -2,6 +2,12 @@
 
 
 
+## get rss url from input url 
+
+https://github.com/wanghaisheng/turn-youtube-channel-to-podcast-rss/blob/main/youtuberss.py
+
+targeted url like this:
+
 https://www.youtube.com/feeds/videos.xml?channel_id=UC7_gcs09iThXybpVgjHZ_7g
 
 
@@ -15,7 +21,9 @@ docker run
 https://user-images.githubusercontent.com/2363295/170819288-fa90b35d-f3b5-4c5c-9f17-4cdc80a680ac.mp4
 
 
+## for those urls can not get rss url, we can manually make one 
 
+https://github.com/wanghaisheng/turn-youtube-channel-to-podcast-rss/blob/main/feed.py
 
 
 # podcast-upload-publish-auto
