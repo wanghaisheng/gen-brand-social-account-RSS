@@ -23,10 +23,12 @@ def youtubechannelrssfromurl(url):
         try:
             info = ydl.extract_info(URL)
             channel_id=info['channel_id']
-    
+            
+            return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
+
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
-
+            return None
         
 # regular channel url  pattern 
 # URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
