@@ -83,9 +83,10 @@ def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
 #'https://www.youtube.com/channel/UC7xBqZEJn3bgCf5GHkg95Iw/'
 # customized channel pattern 
 #'https://www.youtube.com/@KeywordsEverywhere/channels'
-if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/@')):
+if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/channel/','https://www.youtube.com/@')):
     print('valid url')
-    if URL.startswith('https://youtube.com/channel/'):
+    if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
+
         print('====',URL.split("https://youtube.com/channel/"))
         cid=URL.split("channel")[1]
 
