@@ -106,7 +106,7 @@ if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/@'))
             cid=cid.replace('/','')        
     print("start processing---\n",cid)    
     if not os.path.exists(cid):
-        print('prepare dir:',channelid)
+        print('prepare dir:',cid)
         os.mkdir(cid)
     downloadvideosfromchannel(URL,downloadVideo, './'+cid)
     
