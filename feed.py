@@ -4,8 +4,9 @@ import json
 import yt_dlp
 import re
 import os
-# URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
-# URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
+
+
+
 URL = os.getenv('URL')
 downloadVideo = os.getenv('downloadVideo')
 
@@ -72,16 +73,41 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
             fg.link(href=URL)
             fg.description('xxxx')
         fg.rss_file(channeid+'.xml')
-if 'channel' in URL:
-    print('====',URL.split("https://youtube.com/channel/"))
-    channeid=URL.split("channel")[1]
+        
+# regular channel url  pattern 
+# URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
+# URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
+# empty channel without any video uploaded 
+#'https://www.youtube.com/channel/UC7xBqZEJn3bgCf5GHkg95Iw/'
+# customized channel pattern 
+#'https://www.youtube.com/@KeywordsEverywhere/channels'
+if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/@')):
+    print('valid url')
+    if URL.startswith('https://youtube.com/channel/'):
+        print('====',URL.split("https://youtube.com/channel/"))
+        channeid=URL.split("channel")[1]
 
-    print("after replace---\n",channeid)    
+        print("after replace---\n",channeid)    
 
-    # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-    if channeid.endswith("/"):
-        channeid=channeid.replace('/','')
+        # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+        if channeid.endswith("/"):
+            channeid=channeid.replace('/','')
+        
+    else:
+        #https://www.youtube.com/@KeywordsEverywhere/channels
+        print('====',URL.split("https://www.youtube.com/@"))
+        channeid=URL.split("@")[1]
+
+        print("after replace---\n",channeid)    
+        channeid=channeid.split("/")[0]
+
+        # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+        if channeid.endswith("/"):
+            channeid=channeid.replace('/','')        
     print("start processing---\n",channeid)    
     if not os.path.exists(channeid):
         os.mkdir(channeid)
     downloadvideosfromchannel(URL,downloadVideo, './'+channeid)
+    
+else:
+    print('invalid url')
