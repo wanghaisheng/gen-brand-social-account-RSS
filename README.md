@@ -31,6 +31,10 @@ https://user-images.githubusercontent.com/2363295/170819288-fa90b35d-f3b5-4c5c-9
 https://github.com/wanghaisheng/turn-youtube-channel-to-podcast-rss/blob/main/feed.py
 
 
+## feed diff 
+
+https://github.com/NicolasLM/atoma
+
 # podcast-upload-publish-auto
 
 
