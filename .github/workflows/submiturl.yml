@@ -45,6 +45,9 @@ jobs:
         python feed.py
       env:
         URL: ${{ github.event.inputs.URL }}        
+        downloadVideo: ${{ github.event.inputs.downloadVideo }}        
+        downloadVideoHeight: ${{ github.event.inputs.downloadVideoHeight }}        
+        
     # 配置git
     - name: Config git
       run: |
