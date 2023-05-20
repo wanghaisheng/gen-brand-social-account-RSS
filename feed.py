@@ -21,6 +21,8 @@ def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
         'outtmpl': videodir+'/%(alt_title,title){100B-excesslength}\%(title).100B [%(extractor)s.%(id)s] {%(format_id)s}.%(ext)s',
         'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height),
         # 'proxy': 'socks5://127.0.0.1:1080'
+        'verbose': True,
+
     }
     fg = FeedGenerator()
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
