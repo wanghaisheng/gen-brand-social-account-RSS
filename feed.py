@@ -15,7 +15,7 @@ downloadVideo = os.getenv('downloadVideo')
 def downloadvideosfromchannel(url, downloadVideo,videodir):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     ydl_opts = {
-        'outtmpl': videodir+'/%(id)s'+'.mp4',
+        'outtmpl': videodir+'/%(alt_title,title){100B-excesslength}\%(title).100B [%(extractor)s.%(id)s] {%(format_id)s}.%(ext)s',
         'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(480,480),
         # 'proxy': 'socks5://127.0.0.1:1080'
     }
