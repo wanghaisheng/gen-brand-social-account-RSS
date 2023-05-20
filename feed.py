@@ -22,8 +22,7 @@ def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
     }
     fg = FeedGenerator()
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        if not downloadVideo:
-            downloadVideo=True
+
         try:
             info = ydl.extract_info(URL, download=downloadVideo)
             print(json.dumps(ydl.sanitize_info(info)))
