@@ -4,7 +4,7 @@ import json
 import yt_dlp
 import re
 import os
-
+from youtuberss import youtubechannelrssfromurl
 
 
 URL = os.getenv('URL')
@@ -87,34 +87,42 @@ def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
 #'https://www.youtube.com/@KeywordsEverywhere/channels'
 if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/channel/','https://www.youtube.com/@')):
     print('valid url')
-    if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
-
-        print('====',URL.split("https://youtube.com/channel/"))
-        cid=URL.split("channel")[1]
-
-        print("after replace---\n",cid)    
-
-        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-        if cid.endswith("/"):
-            cid=cid.replace('/','')
+    rssURL=youtubechannelrssfromurl(URL)
+    if rssURL is None:
         
-    else:
-        #https://www.youtube.com/@KeywordsEverywhere/channels
-        print('====',URL.split("https://www.youtube.com/@"))
-        cid=URL.split("@")[1]
+        if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
 
-        print("after replace---\n",cid)    
-        cid=cid.split("/")[0]
+            print('====',URL.split("https://youtube.com/channel/"))
+            cid=URL.split("channel")[1]
 
-        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-        if cid.endswith("/"):
-            cid=cid.replace('/','')       
-        URL ="https://www.youtube.com/@"+cid            
-    print("start processing---\n",URL)    
-    if not os.path.exists(cid):
-        print('prepare dir:',cid)
-        os.mkdir(cid)
-    downloadvideosfromchannel(URL,downloadVideo, './'+cid,Height)
+            print("after replace---\n",cid)    
+
+            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+            if cid.endswith("/"):
+                cid=cid.replace('/','')
+
+        else:
+            #https://www.youtube.com/@KeywordsEverywhere/channels
+            print('====',URL.split("https://www.youtube.com/@"))
+            cid=URL.split("@")[1]
+
+            print("after replace---\n",cid)    
+            cid=cid.split("/")[0]
+
+            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+            if cid.endswith("/"):
+                cid=cid.replace('/','')       
+            URL ="https://www.youtube.com/@"+cid            
+        print("start processing---\n",URL)    
+        if not os.path.exists(cid):
+            print('prepare dir:',cid)
+            os.mkdir(cid)
+        downloadvideosfromchannel(URL,downloadVideo, './'+cid,Height)
+    else：
+        print('we can move on to next step',rssURL)
+        
+    ## detect rssurl content changes
     
+    ## upload new episode to target platform
 else:
     print('invalid url')
