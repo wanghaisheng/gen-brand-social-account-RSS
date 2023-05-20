@@ -10,14 +10,14 @@ on:
         type: enviroment
         required: true
       downloadVideo:
-        description: 'true or false'
-        type: bool
-        required: false
-        default: false
+        description: 'if download video file'
+        type: boolean
+        required: true
+
       downloadVideoHeight:
         description: 'true or false'
         type: choice
-        required: false
+        required: true
         options: 
         - 480
         - 720
