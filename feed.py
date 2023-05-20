@@ -213,6 +213,7 @@ gen_Rss_from_url(URL)
 ## compare two files to find differences
 
 ## download diff audio,thumbnail from video to later uploading 
+# if a video contains no subtitles or subtiles file size low than xx kb, we consider it as a music video 
 
 ## publish to target platform
 
