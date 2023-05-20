@@ -15,7 +15,7 @@ on:
         required: true
 
       downloadVideoHeight:
-        description: 'true or false'
+        description: 'best or low'
         type: choice
         required: true
         options: 
