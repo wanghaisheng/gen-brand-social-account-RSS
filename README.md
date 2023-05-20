@@ -85,4 +85,6 @@ add prefix or suffix to description as you like
 
 ## auto upload and schedule publish
 
+https://github.com/wanghaisheng/youtube-to-anchorfm
+
 you can choose whether it is private,public or schedule to someday later
