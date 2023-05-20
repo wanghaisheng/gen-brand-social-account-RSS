@@ -10,6 +10,7 @@ import os
 URL = os.getenv('URL')
 Height = os.getenv('downloadVideoHeight')
 downloadVideo = os.getenv('downloadVideo')
+print('whether download video:',downloadVideo)
 
 
 
