@@ -26,7 +26,7 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
         try:
             info = ydl.extract_info(URL, download=downloadVideo)
             print(json.dumps(ydl.sanitize_info(info)))
-            with open(channeid+'.json', 'w', encoding='utf8') as f:
+            with open(cid+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
             fg.load_extension('podcast')    
                 
@@ -72,7 +72,7 @@ def downloadvideosfromchannel(url, downloadVideo,videodir):
             fg.title('xxxx')
             fg.link(href=URL)
             fg.description('xxxx')
-        fg.rss_file(channeid+'.xml')
+        fg.rss_file(cid+'.xml')
         
 # regular channel url  pattern 
 # URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
@@ -85,30 +85,30 @@ if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/@'))
     print('valid url')
     if URL.startswith('https://youtube.com/channel/'):
         print('====',URL.split("https://youtube.com/channel/"))
-        channeid=URL.split("channel")[1]
+        cid=URL.split("channel")[1]
 
-        print("after replace---\n",channeid)    
+        print("after replace---\n",cid)    
 
-        # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-        if channeid.endswith("/"):
-            channeid=channeid.replace('/','')
+        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+        if cid.endswith("/"):
+            cid=cid.replace('/','')
         
     else:
         #https://www.youtube.com/@KeywordsEverywhere/channels
         print('====',URL.split("https://www.youtube.com/@"))
-        channeid=URL.split("@")[1]
+        cid=URL.split("@")[1]
 
-        print("after replace---\n",channeid)    
-        channeid=channeid.split("/")[0]
+        print("after replace---\n",cid)    
+        cid=cid.split("/")[0]
 
-        # channeid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-        if channeid.endswith("/"):
-            channeid=channeid.replace('/','')        
-    print("start processing---\n",channeid)    
-    if not os.path.exists(channeid):
+        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+        if cid.endswith("/"):
+            cid=cid.replace('/','')        
+    print("start processing---\n",cid)    
+    if not os.path.exists(cid):
         print('prepare dir:',channelid)
-        os.mkdir(channeid)
-    downloadvideosfromchannel(URL,downloadVideo, './'+channeid)
+        os.mkdir(cid)
+    downloadvideosfromchannel(URL,downloadVideo, './'+cid)
     
 else:
     print('invalid url')
