@@ -118,7 +118,7 @@ if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/chan
             print('prepare dir:',cid)
             os.mkdir(cid)
         downloadvideosfromchannel(URL,downloadVideo, './'+cid,Height)
-    else：
+    else:
         print('we can move on to next step',rssURL)
         
     ## detect rssurl content changes
