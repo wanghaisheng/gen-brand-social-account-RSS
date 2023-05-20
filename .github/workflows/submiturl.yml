@@ -13,7 +13,6 @@ on:
         description: 'if download video file'
         type: boolean
         required: true
-
       downloadVideoHeight:
         description: 'best or low'
         type: choice
