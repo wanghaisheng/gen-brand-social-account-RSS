@@ -10,13 +10,12 @@ import os
 URL = os.getenv('URL')
 Height = os.getenv('downloadVideoHeight')
 downloadVideo = os.getenv('downloadVideo')
-if not Height:
-    Height=480
+
 
 
 def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
-    print('your preferred is :',Height)
+    print('your preferred is :',downloadVideo,Height)
     ydl_opts = {
         'outtmpl': videodir+'/%(alt_title,title){100B-excesslength}\%(title).100B [%(extractor)s.%(id)s] {%(format_id)s}.%(ext)s',
         'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height),
