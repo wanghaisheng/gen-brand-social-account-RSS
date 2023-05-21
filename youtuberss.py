@@ -54,11 +54,11 @@ def url2rssURL(URL):
                 except Exception as e:  # skipcq: PYL-W0703
                     print(e)
 
-                        print("start processing---\n",URL)    
-                        if not os.path.exists(cid):
-                            print('prepare dir:',cid)
-                            os.mkdir(cid)
-                        rssurl = genrssfromchannel(URL)
+                    print("start processing---\n",URL)    
+                    if not os.path.exists(cid):
+                        print('prepare dir:',cid)
+                        os.mkdir(cid)
+                    rssurl = genrssfromchannel(URL)
                     return rssurl        
     else:
         print('invalid url')
