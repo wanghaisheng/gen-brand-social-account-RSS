@@ -36,19 +36,6 @@ jobs:
       env:
         URL: ${{ github.event.inputs.URL }}        
         
-    # 配置git
-    - name: Config git
-      run: |
-        git config --local user.email "ations@github.com"
-        git config --local user.name "github"
-        git config --global http.postBuffer 157286400
-        
-        git remote set-url origin "https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}"
-    # 更新仓库
-    - name: Update repo
-      run: |
-        git add .
-        git commit -m "auto update${{ github.event.inputs.URL }}   "
-        git pull
-        git push -u origin main
-      
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Apply php-cs-fixer changes
