@@ -4,9 +4,15 @@ import json
 import yt_dlp
 import re
 import os
-
+import pandas
 
 URL = os.getenv('URL')
+if  not os.path.exists("youtube-url-cid-mappings.csv"):
+    with open('youtube-url-cid-mappings.csv", "w") as file:
+        file.write("url,cid"+"\n")
+url_cid_mapping_list=[]        
+if not os.stat("youtube-url-cid-mappings.txt").st_size == 0:
+    url_cid_mapping_list = pandas.read_csv('youtube-url-cid-mappings.csv')
 
 
 def url2rssURL(URL):
