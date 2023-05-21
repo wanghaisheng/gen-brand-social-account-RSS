@@ -15,28 +15,27 @@ def url2rssURL(URL):
         if "/@" in URL or "/channel/" in URL:
             if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
 
-                print('====',URL.split("https://youtube.com/channel/"))
-                cid=URL.split("channel")[1]
+                channel_id=URL.split("channel/")[1]
 
-                print("after replace---\n",cid)    
+                print("after replace---\n",channel_id)    
 
-                # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-                if cid.endswith("/"):
-                    cid=cid.replace('/','')
+                # channel_id = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+                if channel_id.endswith("/"):
+                    channel_id=channel_id.replace('/','')
 
             else:
                 #https://www.youtube.com/@KeywordsEverywhere/channels
                 print('====',URL.split("https://www.youtube.com/@"))
-                cid=URL.split("@")[1]
+                channel_id=URL.split("@")[1]
 
-                print("after replace---\n",cid)    
-                cid=cid.split("/")[0]
+                print("after replace---\n",channel_id)    
+                channel_id=channel_id.split("/")[0]
 
-                # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-                if cid.endswith("/"):
-                    cid=cid.replace('/','')       
-                rssurl ="https://www.youtube.com/@"+cid         
-            return rssurl
+                # channel_id = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+                if channel_id.endswith("/"):
+                    channel_id=channel_id.replace('/','')       
+                   
+            return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
         else:
             # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
             ydl_opts = {
@@ -55,15 +54,15 @@ def url2rssURL(URL):
                     print(e)
 
                     print("start processing---\n",URL)    
-                    if not os.path.exists(cid):
-                        print('prepare dir:',cid)
-                        os.mkdir(cid)
+                    if not os.path.exists(channel_id):
+                        print('prepare dir:',channel_id)
+                        os.mkdir(channel_id)
                     rssurl = genrssfromchannel(URL)
                     return rssurl        
     else:
         print('invalid url')
         return None
-def cid2rssurl(channel_id):
+def channel_id2rssurl(channel_id):
     return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
 def genrssfromchannel(url):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
@@ -81,7 +80,7 @@ def genrssfromchannel(url):
         try:
             info = ydl.extract_info(URL)
             print(json.dumps(ydl.sanitize_info(info)))
-            with open(cid+'.json', 'w', encoding='utf8') as f:
+            with open(channel_id+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
             fg.load_extension('podcast')    
                 
@@ -127,6 +126,6 @@ def genrssfromchannel(url):
             fg.title('xxxx')
             fg.link(href=URL)
             fg.description('xxxx')
-        fg.rss_file(cid+'.xml')
-        return cid+'.xml'
+        fg.rss_file(channel_id+'.xml')
+        return channel_id+'.xml'
 url2rssURL(URL)
