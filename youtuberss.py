@@ -128,4 +128,5 @@ def genrssfromchannel(url):
             fg.description('xxxx')
         fg.rss_file(channel_id+'.xml')
         return channel_id+'.xml'
-url2rssURL(URL)
+rssurl = url2rssURL(URL)
+print('we found rss url is :',rssurl)
