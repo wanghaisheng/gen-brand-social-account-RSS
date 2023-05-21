@@ -12,31 +12,18 @@ URL = os.getenv('URL')
 def url2rssURL(URL):
     if  "youtube.com" in URL:
         
-        if "/@" in URL or "/channel/" in URL:
-            if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
+        if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
 
-                channel_id=URL.split("channel/")[1]
+            channel_id=URL.split("channel/")[1]
 
-                print("after replace---\n",channel_id)    
+            print("after replace---\n",channel_id)    
 
-                # channel_id = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-                if channel_id.endswith("/"):
-                    channel_id=channel_id.replace('/','')
-
-            else:
-                #https://www.youtube.com/@KeywordsEverywhere/channels
-                print('====',URL.split("https://www.youtube.com/@"))
-                channel_id=URL.split("@")[1]
-
-                print("after replace---\n",channel_id)    
-                channel_id=channel_id.split("/")[0]
-
-                # channel_id = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-                if channel_id.endswith("/"):
-                    channel_id=channel_id.replace('/','')       
-                   
+            # channel_id = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+            if channel_id.endswith("/"):
+                channel_id=channel_id.replace('/','')
             return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
         else:
+
             # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
             ydl_opts = {
                 'verbose': True,
