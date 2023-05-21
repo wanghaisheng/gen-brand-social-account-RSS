@@ -10,7 +10,7 @@ URL = os.getenv('URL')
 
 
 def url2rssURL(URL):
-    if not "youtube.com" in URL:
+    if  "youtube.com" in URL:
         # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
         ydl_opts = {
             'verbose': True,
