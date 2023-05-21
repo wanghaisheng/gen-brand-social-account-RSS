@@ -92,3 +92,10 @@ add prefix or suffix to description as you like
 https://github.com/wanghaisheng/youtube-to-anchorfm
 
 you can choose whether it is private,public or schedule to someday later
+
+
+
+https://github.com/conoro/tiktok-rss-flat/issues
+
+https://github.com/Russell-Newton/TikTokPy
+https://rss.app/rss-feed/tiktok-to-rss
