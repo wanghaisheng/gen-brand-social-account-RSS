@@ -32,7 +32,7 @@ def url2rssURL(URL):
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
                 try:
-                    info = ydl.extract_info(URL)
+                    info = ydl.extract_info(URL,download=False)
                     channel_id=info['channel_id']
 
                     return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
@@ -53,7 +53,6 @@ def channel_id2rssurl(channel_id):
     return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
 def genrssfromchannel(url):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
-    print('your preferred is :',downloadVideo,Height)
     ydl_opts = {
 #         'outtmpl': videodir+'/%(title).200B%(title.201B&…|)s.%(ext)s',
 #         'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height),
@@ -65,7 +64,7 @@ def genrssfromchannel(url):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
-            info = ydl.extract_info(URL)
+            info = ydl.extract_info(URL,download=False)
             print(json.dumps(ydl.sanitize_info(info)))
             with open(channel_id+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
