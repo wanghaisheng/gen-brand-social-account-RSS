@@ -11,51 +11,55 @@ URL = os.getenv('URL')
 
 def url2rssURL(URL):
     if  "youtube.com" in URL:
-        # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
-        ydl_opts = {
-            'verbose': True,
+        
+        if "/@" in URL or "/channel/" in URL:
+            if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
 
-        }
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                print('====',URL.split("https://youtube.com/channel/"))
+                cid=URL.split("channel")[1]
 
-            try:
-                info = ydl.extract_info(URL)
-                channel_id=info['channel_id']
+                print("after replace---\n",cid)    
 
-                return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
+                # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+                if cid.endswith("/"):
+                    cid=cid.replace('/','')
 
-            except Exception as e:  # skipcq: PYL-W0703
-                print(e)
-                if "/@" in URL or "/channel/" in URL:
-                    if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
+            else:
+                #https://www.youtube.com/@KeywordsEverywhere/channels
+                print('====',URL.split("https://www.youtube.com/@"))
+                cid=URL.split("@")[1]
 
-                        print('====',URL.split("https://youtube.com/channel/"))
-                        cid=URL.split("channel")[1]
+                print("after replace---\n",cid)    
+                cid=cid.split("/")[0]
 
-                        print("after replace---\n",cid)    
+                # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+                if cid.endswith("/"):
+                    cid=cid.replace('/','')       
+                rssurl ="https://www.youtube.com/@"+cid         
+            return rssurl
+        else:
+            # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
+            ydl_opts = {
+                'verbose': True,
 
-                        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-                        if cid.endswith("/"):
-                            cid=cid.replace('/','')
+            }
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
-                    else:
-                        #https://www.youtube.com/@KeywordsEverywhere/channels
-                        print('====',URL.split("https://www.youtube.com/@"))
-                        cid=URL.split("@")[1]
+                try:
+                    info = ydl.extract_info(URL)
+                    channel_id=info['channel_id']
 
-                        print("after replace---\n",cid)    
-                        cid=cid.split("/")[0]
+                    return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
 
-                        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-                        if cid.endswith("/"):
-                            cid=cid.replace('/','')       
-                        URL ="https://www.youtube.com/@"+cid            
-                    print("start processing---\n",URL)    
-                    if not os.path.exists(cid):
-                        print('prepare dir:',cid)
-                        os.mkdir(cid)
-                    rssurl = genrssfromchannel(URL)
-                return rssurl        
+                except Exception as e:  # skipcq: PYL-W0703
+                    print(e)
+
+                        print("start processing---\n",URL)    
+                        if not os.path.exists(cid):
+                            print('prepare dir:',cid)
+                            os.mkdir(cid)
+                        rssurl = genrssfromchannel(URL)
+                    return rssurl        
     else:
         print('invalid url')
         return None
