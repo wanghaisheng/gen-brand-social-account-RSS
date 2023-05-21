@@ -7,50 +7,10 @@ import os
 
 
 URL = os.getenv('URL')
-Height = os.getenv('downloadVideoHeight')
-downloadVideo = os.getenv('downloadVideo')
-print('whether download video:',downloadVideo)
 
 
-def youtubechannelrssfromurl(URL):
-
-
-    # regular channel url  pattern 
-    # URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
-    # URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
-    # empty channel without any video uploaded 
-    #'https://www.youtube.com/channel/UC7xBqZEJn3bgCf5GHkg95Iw/'
-    # customized channel pattern 
-    #'https://www.youtube.com/@KeywordsEverywhere/channels'
-    if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/channel/','https://www.youtube.com/@')):
-        print('valid url')
-        if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
-
-            print('====',URL.split("https://youtube.com/channel/"))
-            cid=URL.split("channel")[1]
-
-            print("after replace---\n",cid)    
-
-            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-            if cid.endswith("/"):
-                cid=cid.replace('/','')
-
-        else:
-            #https://www.youtube.com/@KeywordsEverywhere/channels
-            print('====',URL.split("https://www.youtube.com/@"))
-            cid=URL.split("@")[1]
-
-            print("after replace---\n",cid)    
-            cid=cid.split("/")[0]
-
-            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-            if cid.endswith("/"):
-                cid=cid.replace('/','')       
-            URL ="https://www.youtube.com/@"+cid            
-        print("start processing---\n",URL)    
-
-
-
+def url2rssURL(URL):
+    if not "youtube.com" in URL:
         # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
         ydl_opts = {
             'verbose': True,
@@ -66,16 +26,47 @@ def youtubechannelrssfromurl(URL):
 
             except Exception as e:  # skipcq: PYL-W0703
                 print(e)
-                return None        
+                if "/@" in URL or "/channel/" in URL:
+                    if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
+
+                        print('====',URL.split("https://youtube.com/channel/"))
+                        cid=URL.split("channel")[1]
+
+                        print("after replace---\n",cid)    
+
+                        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+                        if cid.endswith("/"):
+                            cid=cid.replace('/','')
+
+                    else:
+                        #https://www.youtube.com/@KeywordsEverywhere/channels
+                        print('====',URL.split("https://www.youtube.com/@"))
+                        cid=URL.split("@")[1]
+
+                        print("after replace---\n",cid)    
+                        cid=cid.split("/")[0]
+
+                        # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+                        if cid.endswith("/"):
+                            cid=cid.replace('/','')       
+                        URL ="https://www.youtube.com/@"+cid            
+                    print("start processing---\n",URL)    
+                    if not os.path.exists(cid):
+                        print('prepare dir:',cid)
+                        os.mkdir(cid)
+                    rssurl = genrssfromchannel(URL)
+                return rssurl        
     else:
         print('invalid url')
         return None
-def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
+def cid2rssurl(channel_id):
+    return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
+def genrssfromchannel(url):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
     ydl_opts = {
-        'outtmpl': videodir+'/%(title).200B%(title.201B&…|)s.%(ext)s',
-        'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height),
+#         'outtmpl': videodir+'/%(title).200B%(title.201B&…|)s.%(ext)s',
+#         'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height),
         # 'proxy': 'socks5://127.0.0.1:1080'
         'verbose': True,
 
@@ -84,7 +75,7 @@ def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
-            info = ydl.extract_info(URL, download=downloadVideo)
+            info = ydl.extract_info(URL)
             print(json.dumps(ydl.sanitize_info(info)))
             with open(cid+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
@@ -133,52 +124,5 @@ def downloadvideosfromchannel(url, downloadVideo,videodir,Height):
             fg.link(href=URL)
             fg.description('xxxx')
         fg.rss_file(cid+'.xml')
-        
-# regular channel url  pattern 
-# URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
-# URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
-# empty channel without any video uploaded 
-#'https://www.youtube.com/channel/UC7xBqZEJn3bgCf5GHkg95Iw/'
-# customized channel pattern 
-#'https://www.youtube.com/@KeywordsEverywhere/channels'
-if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/channel/','https://www.youtube.com/@')):
-    print('valid url')
-    rssURL=youtubechannelrssfromurl(URL)
-    if rssURL is None:
-        
-        if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
-
-            print('====',URL.split("https://youtube.com/channel/"))
-            cid=URL.split("channel")[1]
-
-            print("after replace---\n",cid)    
-
-            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-            if cid.endswith("/"):
-                cid=cid.replace('/','')
-
-        else:
-            #https://www.youtube.com/@KeywordsEverywhere/channels
-            print('====',URL.split("https://www.youtube.com/@"))
-            cid=URL.split("@")[1]
-
-            print("after replace---\n",cid)    
-            cid=cid.split("/")[0]
-
-            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
-            if cid.endswith("/"):
-                cid=cid.replace('/','')       
-            URL ="https://www.youtube.com/@"+cid            
-        print("start processing---\n",URL)    
-        if not os.path.exists(cid):
-            print('prepare dir:',cid)
-            os.mkdir(cid)
-        downloadvideosfromchannel(URL,downloadVideo, './'+cid,Height)
-    else:
-        print('we can move on to next step',rssURL)
-        
-    ## detect rssurl content changes
-    
-    ## upload new episode to target platform
-else:
-    print('invalid url')
+        return cid+'.xml'
+url2rssURL(URL)
