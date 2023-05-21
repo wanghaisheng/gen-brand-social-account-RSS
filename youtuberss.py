@@ -53,8 +53,29 @@ def url2rssURL(URL):
                     rssurl = genrssfromchannel(URL)
                     return rssurl        
     else:
-        print('invalid url')
-        return None
+
+        # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
+        ydl_opts = {
+            'verbose': True,
+
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+
+            try:
+                info = ydl.extract_info(URL,download=False)
+                channel_id=info['channel_id']
+
+
+                print("start processing---\n",URL)    
+                if not os.path.exists(channel_id):
+                    print('prepare dir:',channel_id)
+                    os.mkdir(channel_id)
+                rssurl = genrssfromchannel(URL)
+
+            except Exception as e:  # skipcq: PYL-W0703
+                print(e)
+
+                return None      
 def channel_id2rssurl(channel_id):
     return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
 def genrssfromchannel(url):
