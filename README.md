@@ -1,4 +1,6 @@
-# turn-youtube-podcast-rss
+# monitor brand social account posts using RSS
+
+turn-youtube-podcast-rss
 
 ## supported sites
 
