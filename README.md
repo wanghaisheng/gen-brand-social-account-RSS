@@ -96,7 +96,8 @@ you can choose whether it is private,public or schedule to someday later
 
 ## thanks 
 
-https://github.com/conoro/tiktok-rss-flat/issues
+https://github.com/open-tiktoka/tiktok-rss-gui/tree/main
 
 https://github.com/Russell-Newton/TikTokPy
+
 https://rss.app/rss-feed/tiktok-to-rss
