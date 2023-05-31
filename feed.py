@@ -71,9 +71,7 @@ def youtubechannelrssfromurl(URL):
                 print(e)
 
                 return None        
-    else:
-        print('invalid url')
-        return None
+
 def gen_Rss_from_url(URL):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
