@@ -54,7 +54,10 @@ def get_cid_from_URL(URL):
         return None
 def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False,isAudioOnly:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
-    print('your preferred is :',downloadVideo,Height)
+    print('your preferred is :',downloadVideo,Height,isComments,isAudioOnly)
+
+        
+    
     if isAudioOnly:
         ydl_opts = {
             'outtmpl': videodir+'/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
