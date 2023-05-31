@@ -59,6 +59,9 @@ jobs:
         URL: ${{ github.event.inputs.URL }}        
         downloadVideo: ${{ github.event.inputs.downloadVideo }}        
         downloadVideoHeight: ${{ github.event.inputs.downloadVideoHeight }}        
+        downloadComments: ${{ github.event.inputs.downloadComments }}        
+        downloadSubtitles: ${{ github.event.inputs.downloadSubtitles }}        
+        downloadOnlyAudio: ${{ github.event.inputs.downloadOnlyAudio }}        
         
     # 配置git
     - name: Config git
