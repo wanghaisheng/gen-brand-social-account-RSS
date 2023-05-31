@@ -103,6 +103,6 @@ if cid:
         os.mkdir(cid)
     print("video download folder ---\n",'./'+cid)    
 
-    downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle,downloadComments)
+    downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle,isComments)
 else:
     print('please input a valid url',URL)
