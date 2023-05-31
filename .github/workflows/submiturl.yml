@@ -1,5 +1,5 @@
 
-name: submit-url-youtube-to-podcast-rss
+name: download videos from url，support video url and channel url
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -47,7 +47,7 @@ jobs:
         pip install -r dev.txt
     - name: run demo
       run: |
-        python feed.py
+        python  downloadVideos.py 
       env:
         URL: ${{ github.event.inputs.URL }}        
         downloadVideo: ${{ github.event.inputs.downloadVideo }}        
