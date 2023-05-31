@@ -56,7 +56,7 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
     if isAudioOnly:
-        ytp_format ='bestaudio', 'outtmpl': '%(title)s.mp3'
+        ytp_format ='bestaudio'
     else:
         ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
         
