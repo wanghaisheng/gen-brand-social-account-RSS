@@ -57,7 +57,7 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
     print('your preferred is :',downloadVideo,Height)
     if isAudioOnly:
         ydl_opts = {
-            'outtmpl': videodir '/' + video_title + '.%(ext)s',
+            'outtmpl': videodir +'/' + video_title + '.%(ext)s',
             'format': 'bestaudio/best',
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
