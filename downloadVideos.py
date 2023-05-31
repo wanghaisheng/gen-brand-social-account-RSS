@@ -72,14 +72,12 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
         'writeinfojson': isComments,}
 
 
-        # parsing JSON string:
-    ydl_opts = json.loads(ydl_opts)
+    ydl_opts =  ydl_opts.update(y)
 
     # appending the data
-    ydl_opts.update(y)
+   
 
     # the result is a JSON string:
-    ydl_opts=json.dumps(z) 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
