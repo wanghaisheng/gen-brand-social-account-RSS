@@ -52,7 +52,7 @@ def get_cid_from_URL(URL):
         return cid
     else:
         return None
-def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False):
+def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False,isAudioOnly:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
     if isAudioOnly:
@@ -113,6 +113,6 @@ if cid:
         os.mkdir(cid)
     print("video download folder ---\n",'./'+cid)    
 
-    downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle,isComments)
+    downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle,isComments,isAudioOnly)
 else:
     print('please input a valid url',URL)
