@@ -56,31 +56,40 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
     if isAudioOnly:
-        ytp_format ='bestaudio'
+        ydl_opts = {
+            'outtmpl': videodir '/' + video_title + '.%(ext)s',
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }]
+        }
+        downloadVideo=False
     else:
         ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
         
-    ydl_opts = {
-        'outtmpl': videodir+'/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
-        'format': ytp_format,
-        # 'proxy': 'socks5://127.0.0.1:1080'
-        'verbose': True,
+        ydl_opts = {
+            'outtmpl': videodir+'/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
+            'format': ytp_format,
+            # 'proxy': 'socks5://127.0.0.1:1080'
+            'verbose': True,
 
-    }
-    # python object to be appended
-    y = {        
-        'writesubtitles': isSubtitle, 
-        'writeautomaticsub': isSubtitle,
-        "subtitleslangs": ["all", "-live_chat"],        
-        'getcomments': isComments,
-        'writeinfojson': isComments,}
+        }
+        # python object to be appended
+        y = {        
+            'writesubtitles': isSubtitle, 
+            'writeautomaticsub': isSubtitle,
+            "subtitleslangs": ["all", "-live_chat"],        
+            'getcomments': isComments,
+            'writeinfojson': isComments,}
 
 
-    ydl_opts =  ydl_opts | y
-    if isAudioOnly:
-        print('you choose only download audio')
-        ydl_opts= ydl_opts | {'extract_audio': True, }
-   
+        ydl_opts =  ydl_opts | y
+        if isAudioOnly:
+            print('you choose only download audio')
+            ydl_opts= ydl_opts | {'extract_audio': True, }
+
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
