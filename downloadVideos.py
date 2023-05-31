@@ -60,7 +60,7 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
     
     if isAudioOnly:
         ydl_opts = {
-            'outtmpl': videodir+'/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
+            'outtmpl': videodir+'/audio/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
             'format': 'bestaudio/best',
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
@@ -114,6 +114,8 @@ if cid:
     if not os.path.exists(cid):
         print('prepare dir:',cid)
         os.mkdir(cid)
+        os.mkdir(cid+’/audio‘)
+
     print("video download folder ---\n",'./'+cid)    
 
     downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle,isComments,isAudioOnly)
