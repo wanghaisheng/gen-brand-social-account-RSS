@@ -89,10 +89,8 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
 
 
         ydl_opts =  ydl_opts | y
-        if isAudioOnly:
-            print('you choose only download audio')
-            ydl_opts= ydl_opts | {'extract_audio': True, }
-    print('your preferred is :',downloadVideo,isSubtitle,isComments,isAudioOnly)
+
+    print('your ydl_opts is :',ydl_opts)
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
