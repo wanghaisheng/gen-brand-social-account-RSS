@@ -17,7 +17,10 @@ on:
         description: 'if download video subtitles'
         type: boolean
         required: true
-
+      downloadComments:
+        description: 'if download video comments'
+        type: boolean
+        required: true
       downloadVideoHeight:
         description: 'best or low'
         type: choice
