@@ -9,6 +9,7 @@ import os
 URL = os.getenv('URL')
 Height = os.getenv('downloadVideoHeight')
 downloadVideo = os.getenv('downloadVideo')
+isSubtitle=os.getenv('downloadSubtitles')
 print('whether download video:',downloadVideo)
 
 
@@ -133,13 +134,17 @@ def gen_Rss_from_url(URL):
             fg.link(href=URL)
             fg.description('xxxx')
         fg.rss_file(cid+'.xml')    
-def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height):
+def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
+    ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
+        
     ydl_opts = {
         'outtmpl': videodir+'/%(title).200B%(title.201B&…|)s.%(ext)s',
-        'format': 'bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height),
+        'format': ytp_format,
         # 'proxy': 'socks5://127.0.0.1:1080'
+        'writesubtitles': isSubtitle, 
+        'writeautomaticsub': isSubtitle,
         'verbose': True,
 
     }
@@ -254,7 +259,7 @@ if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/chan
         if not os.path.exists(cid):
             print('prepare dir:',cid)
             os.mkdir(cid)
-        downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height)
+        downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle)
     else:
         print('we can move on to next step',rssURL)
         
