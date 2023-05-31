@@ -12,7 +12,45 @@ downloadVideo = os.getenv('downloadVideo')
 isSubtitle=os.getenv('downloadSubtitles')
 print('whether download video:',downloadVideo)
 
+def get_cid_from_URL(URL):
 
+
+    # regular channel url  pattern 
+    # URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
+    # URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
+    # empty channel without any video uploaded 
+    #'https://www.youtube.com/channel/UC7xBqZEJn3bgCf5GHkg95Iw/'
+    # customized channel pattern 
+    #'https://www.youtube.com/@KeywordsEverywhere/channels'
+    if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/channel/','https://www.youtube.com/@')):
+        print('valid url')
+        if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
+
+            print('====',URL.split("https://youtube.com/channel/"))
+            cid=URL.split("channel")[1]
+
+            print("after replace---\n",cid)    
+
+            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+            if cid.endswith("/"):
+                cid=cid.replace('/','')
+
+        else:
+            #https://www.youtube.com/@KeywordsEverywhere/channels
+            print('====',URL.split("https://www.youtube.com/@"))
+            cid=URL.split("@")[1]
+
+            print("after replace---\n",cid)    
+            cid=cid.split("/")[0]
+
+            # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
+            if cid.endswith("/"):
+                cid=cid.replace('/','')       
+            URL ="https://www.youtube.com/@"+cid            
+        print("start processing---\n",URL)    
+        return cid
+    else:
+        return None
 def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
@@ -42,12 +80,14 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
         
 
 cid = get_cid_from_URL(URL)
+if cid:
 
+    print("start processing---\n",URL)    
+    if not os.path.exists(cid):
+        print('prepare dir:',cid)
+        os.mkdir(cid)
+    print("video download folder ---\n",'./'+cid)    
 
-print("start processing---\n",URL)    
-if not os.path.exists(cid):
-    print('prepare dir:',cid)
-    os.mkdir(cid)
-print("video download folder ---\n",'./'+cid)    
-
-downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle)
+    downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle)
+else:
+    print('please input a valid url',URL)
