@@ -21,6 +21,10 @@ on:
         description: 'if download video comments'
         type: boolean
         required: true
+      downloadOnlyAudio:
+        description: 'if download audio only'
+        type: boolean
+        required: true
       downloadVideoHeight:
         description: 'best or low'
         type: choice
