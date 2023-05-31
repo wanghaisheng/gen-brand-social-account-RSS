@@ -12,6 +12,7 @@ downloadVideo = os.getenv('downloadVideo')
 isSubtitle=os.getenv('downloadSubtitles')
 print('whether download video:',downloadVideo)
 isComments=os.getenv('downloadComments')
+isAudioOnly=os.getenv('downloadOnlyAudio')
 def get_cid_from_URL(URL):
 
 
@@ -72,7 +73,7 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
         'writeinfojson': isComments,}
 
 
-    ydl_opts =  ydl_opts.update(y)
+    ydl_opts =  ydl_opts | y
 
     # appending the data
    
