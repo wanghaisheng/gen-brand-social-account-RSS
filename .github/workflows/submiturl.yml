@@ -13,6 +13,11 @@ on:
         description: 'if download video file'
         type: boolean
         required: true
+      downloadSubtitles:
+        description: 'if download video subtitles'
+        type: boolean
+        required: true
+
       downloadVideoHeight:
         description: 'best or low'
         type: choice
