@@ -55,10 +55,13 @@ def get_cid_from_URL(URL):
 def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,Height)
-    ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
+    if isAudioOnly:
+        ytp_format ='bestaudio', 'outtmpl': '%(title)s.mp3'
+    else:
+        ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
         
     ydl_opts = {
-        'outtmpl': videodir+'/%(title).200B%(title.201B&…|)s.%(ext)s',
+        'outtmpl': videodir+'/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
         'format': ytp_format,
         # 'proxy': 'socks5://127.0.0.1:1080'
         'verbose': True,
@@ -74,11 +77,9 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
 
 
     ydl_opts =  ydl_opts | y
-
-    # appending the data
+    if isAudioOnly:
+        ydl_opts= ydl_opts | {'extract_audio': True, }
    
-
-    # the result is a JSON string:
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
