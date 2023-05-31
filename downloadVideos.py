@@ -114,7 +114,7 @@ if cid:
     if not os.path.exists(cid):
         print('prepare dir:',cid)
         os.mkdir(cid)
-        os.mkdir(cid+’/audio‘)
+        os.mkdir(cid+'/audio‘)
 
     print("video download folder ---\n",'./'+cid)    
 
