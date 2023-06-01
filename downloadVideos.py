@@ -4,8 +4,8 @@ import json
 import yt_dlp
 import re
 import os
-import rarfile
 import shutil
+import zipfile
 
 
 
@@ -117,7 +117,8 @@ def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtit
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
 
-def rar_folder(folder_path, output_folder, max_size_mb):
+
+def zip_folder(folder_path, output_folder, max_size_mb):
     # Create the output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
 
@@ -129,36 +130,37 @@ def rar_folder(folder_path, output_folder, max_size_mb):
         for file in files:
             file_path = os.path.join(root, file)
 
-            # Add each file to the current RAR archive
-            rar_archive.write(file_path)
+            # Add each file to the current ZIP archive
+            zip_file.write(file_path)
 
-            # Check if the current RAR file exceeds the maximum size
-            if rar_archive.file_size() > max_size_bytes:
-                # Close the current RAR archive
-                rar_archive.close()
+            # Check if the current ZIP file exceeds the maximum size
+            if zip_file.file_size > max_size_bytes:
+                # Close the current ZIP archive
+                zip_file.close()
 
-                # Move the current RAR file to the output folder
-                shutil.move(rar_temp_file, os.path.join(output_folder, f'archive{rar_count}.rar'))
+                # Move the current ZIP file to the output folder
+                shutil.move(zip_temp_file, os.path.join(output_folder, f'archive{zip_count}.zip'))
 
-                print(f"Created 'archive{rar_count}.rar' (size: {os.path.getsize(os.path.join(output_folder, f'archive{rar_count}.rar'))} bytes)")
+                print(f"Created 'archive{zip_count}.zip' (size: {os.path.getsize(os.path.join(output_folder, f'archive{zip_count}.zip'))} bytes)")
 
-                # Create a new RAR archive for the remaining files
-                rar_count += 1
-                rar_temp_file = os.path.join(output_folder, f'temp{rar_count}.rar')
-                rar_archive = rarfile.RarFile(rar_temp_file, 'w')
+                # Create a new ZIP archive for the remaining files
+                zip_count += 1
+                zip_temp_file = os.path.join(output_folder, f'temp{zip_count}.zip')
+                zip_file = zipfile.ZipFile(zip_temp_file, 'w', zipfile.ZIP_DEFLATED)
 
-                # Delete the original file after adding it to the RAR archive
+                # Delete the original file after adding it to the ZIP archive
                 os.remove(file_path)
 
-    # Close the last RAR archive
-    rar_archive.close()
+    # Close the last ZIP archive
+    zip_file.close()
 
-    # Move the last RAR file to the output folder
-    shutil.move(rar_temp_file, os.path.join(output_folder, f'archive{rar_count}.rar'))
+    # Move the last ZIP file to the output folder
+    shutil.move(zip_temp_file, os.path.join(output_folder, f'archive{zip_count}.zip'))
 
-    print(f"Created 'archive{rar_count}.rar' (size: {os.path.getsize(os.path.join(output_folder, f'archive{rar_count}.rar'))} bytes)")
+    print(f"Created 'archive{zip_count}.zip' (size: {os.path.getsize(os.path.join(output_folder, f'archive{zip_count}.zip'))} bytes)")
 
-        
+
+
 
 cid = get_cid_from_URL(URL)
 if not os.path.exists('result'):
@@ -184,12 +186,13 @@ if cid:
     # Specify the maximum size of each RAR file in MB
     max_size_mb = 1500
 
-    # Create a temporary RAR file for the first archive
-    rar_count = 1
-    rar_temp_file = os.path.join(output_folder, f'temp{rar_count}.rar')
-    rar_archive = rarfile.RarFile(rar_temp_file, 'w')
 
-    # Compress the folder into multiple RAR archives
-    rar_folder(folder_path, output_folder, max_size_mb)
+    # Create a temporary ZIP file for the first archive
+    zip_count = 1
+    zip_temp_file = os.path.join(output_folder, f'temp{zip_count}.zip')
+    zip_file = zipfile.ZipFile(zip_temp_file, 'w', zipfile.ZIP_DEFLATED)
+
+    # Compress the folder into multiple ZIP archives
+    zip_folder(folder_path, output_folder, max_size_mb)
 else:
     print('please input a valid url',URL)
