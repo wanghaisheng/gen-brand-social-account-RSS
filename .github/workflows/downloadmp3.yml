@@ -3,9 +3,6 @@ name: download audio from url，support video url and channel url
 
 on:
   # Allows you to run this workflow manually from the Actions tab
-  push:
-    branches:
-      - main  
   workflow_dispatch:
     inputs:
       URL:
@@ -22,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+         fetch-depth: 0    
     - name: Set up Python 3.10
       uses: actions/setup-python@v4
       with:
