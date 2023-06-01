@@ -69,4 +69,6 @@ jobs:
       with:
         allowUpdates: true
         artifacts: "output/*/*.*"
+        tag: ${{ github.run_id }}
         token: ${{ secrets.GITHUB_TOKEN }}
+ 
