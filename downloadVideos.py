@@ -61,7 +61,7 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
     if isAudioOnly:
         ydl_opts = {
             'outtmpl': videodir+'/audio/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
-            'extract_audio': True,
+#             'extract_audio': True,
             'verbose': True,
 
             'format': 'bestaudio/best',
@@ -71,7 +71,7 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
                 'preferredquality': '192',
             }]
         }
-        downloadVideo=False
+        downloadVideo=True
     else:
         ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
         
