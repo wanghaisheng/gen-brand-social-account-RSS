@@ -8,9 +8,8 @@ import os
 
 URL = os.getenv('URL')
 Height = os.getenv('downloadVideoHeight')
-downloadVideo = os.getenv('downloadVideo')
+isDownloadVideo = os.getenv('downloadVideo')
 isSubtitle=os.getenv('downloadSubtitles')
-print('whether download video:',downloadVideo)
 isComments=os.getenv('downloadComments')
 isAudioOnly=os.getenv('downloadOnlyAudio')
 def get_cid_from_URL(URL):
@@ -52,13 +51,16 @@ def get_cid_from_URL(URL):
         return cid
     else:
         return None
-def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False,isAudioOnly:bool=False):
+def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False,isAudioOnly:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print('your preferred is :',downloadVideo,isSubtitle,isComments,isAudioOnly)
 
-        
-    
+
     if isAudioOnly:
+        if not os.path.exists(cid+'/'+'audio'):
+        
+            os.mkdir(cid+'/'+'audio')
+
         ydl_opts = {
             'outtmpl': videodir+'/audio/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
 #             'extract_audio': True,
@@ -71,7 +73,7 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
                 'preferredquality': '192',
             }]
         }
-        downloadVideo=True
+        isDownloadVideo=True
     else:
         ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
         
@@ -92,13 +94,16 @@ def downloadvideosfromfreshchannel(URL, downloadVideo,videodir,Height,isSubtitle
 
 
         ydl_opts =  ydl_opts | y
-
+    print('whether download video:',isDownloadVideo)
+    print('whether download subtitle:',isSubtitle)
+    print('whether download comment:',isComments)
+    print('whether download audio:',isAudioOnly)
     print('your ydl_opts is :',ydl_opts)
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
-            info = ydl.extract_info(URL, download=downloadVideo)
+            info = ydl.extract_info(URL, download=isDownloadVideo)
 #             print(json.dumps(ydl.sanitize_info(info)))
             with open(cid+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
@@ -116,10 +121,9 @@ if cid:
     if not os.path.exists(cid):
         print('prepare dir:',cid)
         os.mkdir(cid)
-        os.mkdir(cid+'/'+'audio')
 
     print("video download folder ---\n",'./'+cid)    
 
-    downloadvideosfromfreshchannel(URL,downloadVideo, './'+cid,Height,isSubtitle,isComments,isAudioOnly)
+    downloadvideosfromfreshchannel(URL,isDownloadVideo, './'+cid,Height,isSubtitle,isComments,isAudioOnly)
 else:
     print('please input a valid url',URL)
