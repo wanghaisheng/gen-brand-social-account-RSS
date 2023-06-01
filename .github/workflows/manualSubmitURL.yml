@@ -21,10 +21,6 @@ on:
         description: 'if download video comments'
         type: boolean
         required: true
-      downloadOnlyAudio:
-        description: 'if download audio only'
-        type: boolean
-        required: true
       downloadVideoHeight:
         description: 'best or low'
         type: choice
@@ -61,7 +57,6 @@ jobs:
         downloadVideoHeight: ${{ github.event.inputs.downloadVideoHeight }}        
         downloadComments: ${{ github.event.inputs.downloadComments }}        
         downloadSubtitles: ${{ github.event.inputs.downloadSubtitles }}        
-        downloadOnlyAudio: ${{ github.event.inputs.downloadOnlyAudio }}        
         
     # 配置git
     - name: Config git
