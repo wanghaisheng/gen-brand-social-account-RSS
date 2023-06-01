@@ -4,6 +4,10 @@ import json
 import yt_dlp
 import re
 import os
+import rarfile
+import shutil
+
+
 
 
 URL = os.getenv('URL')
@@ -113,21 +117,79 @@ def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtit
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
 
+def rar_folder(folder_path, output_folder, max_size_mb):
+    # Create the output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
+
+    # Convert the maximum size from MB to bytes
+    max_size_bytes = max_size_mb * 1024 * 1024
+
+    # Iterate over the directory tree
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+
+            # Add each file to the current RAR archive
+            rar_archive.write(file_path)
+
+            # Check if the current RAR file exceeds the maximum size
+            if rar_archive.file_size() > max_size_bytes:
+                # Close the current RAR archive
+                rar_archive.close()
+
+                # Move the current RAR file to the output folder
+                shutil.move(rar_temp_file, os.path.join(output_folder, f'archive{rar_count}.rar'))
+
+                print(f"Created 'archive{rar_count}.rar' (size: {os.path.getsize(os.path.join(output_folder, f'archive{rar_count}.rar'))} bytes)")
+
+                # Create a new RAR archive for the remaining files
+                rar_count += 1
+                rar_temp_file = os.path.join(output_folder, f'temp{rar_count}.rar')
+                rar_archive = rarfile.RarFile(rar_temp_file, 'w')
+
+                # Delete the original file after adding it to the RAR archive
+                os.remove(file_path)
+
+    # Close the last RAR archive
+    rar_archive.close()
+
+    # Move the last RAR file to the output folder
+    shutil.move(rar_temp_file, os.path.join(output_folder, f'archive{rar_count}.rar'))
+
+    print(f"Created 'archive{rar_count}.rar' (size: {os.path.getsize(os.path.join(output_folder, f'archive{rar_count}.rar'))} bytes)")
 
         
 
 cid = get_cid_from_URL(URL)
-if not os.path.exists('output'):
-    os.mkdir('output')
+if not os.path.exists('result'):
+    os.mkdir('result')
 if cid:
 
     print("start processing---\n",URL)    
-    if not os.path.exists("./output/"+cid):
+    if not os.path.exists("./result/"+cid):
         print('prepare dir:',cid)
-        os.mkdir("./output/"+cid)
+        os.mkdir("./result/"+cid)
 
     print("video download folder ---\n",'./'+cid)    
 
-    downloadvideosfromfreshchannel(URL,isDownloadVideo, './output/'+cid,Height,isSubtitle,isComments,isAudioOnly)
+    downloadvideosfromfreshchannel(URL,isDownloadVideo, './result/'+cid,Height,isSubtitle,isComments,isAudioOnly)
+
+    # Specify the folder path you want to compress
+    folder_path = './result'
+
+    # Specify the output folder for RAR files
+    output_folder = './output'
+    if not os.path.exists('output'):
+        os.mkdir('output')
+    # Specify the maximum size of each RAR file in MB
+    max_size_mb = 1500
+
+    # Create a temporary RAR file for the first archive
+    rar_count = 1
+    rar_temp_file = os.path.join(output_folder, f'temp{rar_count}.rar')
+    rar_archive = rarfile.RarFile(rar_temp_file, 'w')
+
+    # Compress the folder into multiple RAR archives
+    rar_folder(folder_path, output_folder, max_size_mb)
 else:
     print('please input a valid url',URL)
