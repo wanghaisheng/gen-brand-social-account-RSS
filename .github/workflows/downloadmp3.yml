@@ -54,10 +54,17 @@ jobs:
         
         git remote set-url origin "https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}"
     # 更新仓库
-    - name: Update repo
-      run: |
-        git add .
-        git commit -m "auto update upwork"
-        git pull
-        git push -u origin main
+#     - name: Update repo
+#       run: |
+#         git add .
+#         git commit -m "auto update upwork"
+#         git pull
+#         git push -u origin main
       
+    - name: Upload files
+      # arg info: https://github.com/ncipollo/release-action#release-action
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        artifacts: "output/*/*.*"
+        token: ${{ secrets.GITHUB_TOKEN }}
