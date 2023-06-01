@@ -59,9 +59,9 @@ def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtit
 
 
     if isAudioOnly:
-        if not os.path.exists(cid+'/'+'audio'):
+        if not os.path.exists(videodir+'/'+'audio'):
         
-            os.mkdir(cid+'/'+'audio')
+            os.mkdir(videodir+'/'+'audio')
 
         ydl_opts = {
             'outtmpl': videodir+'/audio/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
@@ -117,6 +117,8 @@ def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtit
         
 
 cid = get_cid_from_URL(URL)
+if not os.path.exists('./output'):
+    os.mkdir('./output')
 if cid:
 
     print("start processing---\n",URL)    
@@ -126,6 +128,6 @@ if cid:
 
     print("video download folder ---\n",'./'+cid)    
 
-    downloadvideosfromfreshchannel(URL,isDownloadVideo, './'+cid,Height,isSubtitle,isComments,isAudioOnly)
+    downloadvideosfromfreshchannel(URL,isDownloadVideo, './output/'+cid,Height,isSubtitle,isComments,isAudioOnly)
 else:
     print('please input a valid url',URL)
