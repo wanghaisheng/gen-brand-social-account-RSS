@@ -3,3 +3,4 @@ python_dateutil==2.8.0
 yt-dlp
 feedgen
 pandas
+rarfile
