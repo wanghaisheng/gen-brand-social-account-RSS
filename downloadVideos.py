@@ -117,14 +117,14 @@ def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtit
         
 
 cid = get_cid_from_URL(URL)
-if not os.path.exists('./output'):
-    os.mkdir('./output')
+if not os.path.exists('output'):
+    os.mkdir('output')
 if cid:
 
     print("start processing---\n",URL)    
-    if not os.path.exists(cid):
+    if not os.path.exists("./output/"+cid):
         print('prepare dir:',cid)
-        os.mkdir(cid)
+        os.mkdir("./output/"+cid)
 
     print("video download folder ---\n",'./'+cid)    
 
