@@ -12,6 +12,8 @@ isDownloadVideo = os.getenv('downloadVideo')
 isSubtitle=os.getenv('downloadSubtitles')
 isComments=os.getenv('downloadComments')
 isAudioOnly=os.getenv('downloadOnlyAudio')
+
+
 def get_cid_from_URL(URL):
 
 
@@ -53,7 +55,7 @@ def get_cid_from_URL(URL):
         return None
 def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False,isAudioOnly:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
-    print('your preferred is :',downloadVideo,isSubtitle,isComments,isAudioOnly)
+    print('your preferred is :',isDownloadVideo,isSubtitle,isComments,isAudioOnly)
 
 
     if isAudioOnly:
