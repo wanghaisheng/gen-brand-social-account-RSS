@@ -3,6 +3,9 @@ name: download audio from url，support video url and channel url
 
 on:
   # Allows you to run this workflow manually from the Actions tab
+  push:
+    branches:
+      - main  
   workflow_dispatch:
     inputs:
       URL:
