@@ -224,6 +224,6 @@ if cid:
     zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
 
     # Compress the folder into multiple ZIP archives
-    zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file)
+    zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file,zip_count)
 else:
     print("please input a valid url", URL)
