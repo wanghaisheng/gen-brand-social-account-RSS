@@ -56,6 +56,18 @@ def get_cid_from_URL(URL):
         print("start processing---\n",URL)    
         return cid
     else:
+        ydl_opts = {
+            'verbose': True,
+
+        }        
+         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+
+            try:
+                info = ydl.extract_info(URL, download=False)  
+                channel_id=info['channel_id']
+                return channel_id
+            except:
+                return None
         return None
 def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False,isAudioOnly:bool=False):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
