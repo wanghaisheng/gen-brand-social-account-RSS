@@ -115,7 +115,7 @@ def downloadvideosfromfreshchannel(
         y = {
             "writesubtitles": isSubtitle,
             "writeautomaticsub": isSubtitle,
-            "subtitleslangs": ["all", "-live_chat"],
+            'subtitleslangs': ['en.*','.*orig'],
             "getcomments": isComments,
             "writeinfojson": isComments,
         }
