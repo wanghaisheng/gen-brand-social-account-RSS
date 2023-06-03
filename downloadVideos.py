@@ -154,7 +154,7 @@ def zip_folder(folder_path, output_folder, max_size_mb, zip_file):
             zip_file.write(file_path)
 
             # Check if the current ZIP file exceeds the maximum size
-            if os.stats(file_path).st_size > max_size_bytes:
+            if os.stat(file_path).st_size > max_size_bytes:
                 # Close the current ZIP archive
                 zip_file.close()
 
