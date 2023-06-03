@@ -138,7 +138,7 @@ def downloadvideosfromfreshchannel(
             print(e)
 
 
-def zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file):
+def zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file,zip_count):
     # Create the output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
 
