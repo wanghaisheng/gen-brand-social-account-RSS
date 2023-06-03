@@ -9,20 +9,21 @@ turn-youtube-podcast-rss
 * douyin 
 * kuaishou
 
-## get rss url from input url 
+## get rss url from youtube  url 
 
 https://github.com/wanghaisheng/turn-youtube-channel-to-podcast-rss/blob/main/youtuberss.py
 
-targeted url like this:
+get rss url like this. then you can monitor this url to get changes
 
 https://www.youtube.com/feeds/videos.xml?channel_id=UC7_gcs09iThXybpVgjHZ_7g
 
 
+## get rss url from douyin 
 
-run on your local machine 
 
-docker build 
-docker run 
+## get rss url from tiktok 
+
+
 
 
 https://user-images.githubusercontent.com/2363295/170819288-fa90b35d-f3b5-4c5c-9f17-4cdc80a680ac.mp4
