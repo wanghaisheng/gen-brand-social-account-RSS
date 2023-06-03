@@ -1,5 +1,3 @@
-from feedgen.feed import FeedGenerator
-
 import json
 import yt_dlp
 import re
@@ -8,129 +6,139 @@ import shutil
 import zipfile
 
 
-
-
-URL = os.getenv('URL')
-Height = os.getenv('downloadVideoHeight')
-isDownloadVideo = os.getenv('downloadVideo')
-isSubtitle=os.getenv('downloadSubtitles')
-isComments=os.getenv('downloadComments')
-isAudioOnly=os.getenv('downloadOnlyAudio')
+URL = os.getenv("URL")
+Height = os.getenv("downloadVideoHeight")
+isDownloadVideo = os.getenv("downloadVideo")
+isSubtitle = os.getenv("downloadSubtitles")
+isComments = os.getenv("downloadComments")
+isAudioOnly = os.getenv("downloadOnlyAudio")
 
 
 def get_cid_from_URL(URL):
-
-
-    # regular channel url  pattern 
+    # regular channel url  pattern
     # URL = 'https://youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg'
     # URL = 'https://youtube.com/channel/UCBSQxFi6a8Ju2v_hgiM78Ew'
-    # empty channel without any video uploaded 
+    # empty channel without any video uploaded
     #'https://www.youtube.com/channel/UC7xBqZEJn3bgCf5GHkg95Iw/'
-    # customized channel pattern 
+    # customized channel pattern
     #'https://www.youtube.com/@KeywordsEverywhere/channels'
-    if URL.startswith(('https://youtube.com/channel/', 'https://www.youtube.com/channel/','https://www.youtube.com/@')):
-        print('valid url')
-        if URL.startswith('https://youtube.com/channel/') or URL.startswith("https://www.youtube.com/channel/"):
+    if URL.startswith(
+        (
+            "https://youtube.com/channel/",
+            "https://www.youtube.com/channel/",
+            "https://www.youtube.com/@",
+        )
+    ):
+        print("valid url")
+        if URL.startswith("https://youtube.com/channel/") or URL.startswith(
+            "https://www.youtube.com/channel/"
+        ):
+            print("====", URL.split("https://youtube.com/channel/"))
+            cid = URL.split("channel")[1]
 
-            print('====',URL.split("https://youtube.com/channel/"))
-            cid=URL.split("channel")[1]
-
-            print("after replace---\n",cid)    
+            print("after replace---\n", cid)
 
             # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
             if cid.endswith("/"):
-                cid=cid.replace('/','')
+                cid = cid.replace("/", "")
 
         else:
-            #https://www.youtube.com/@KeywordsEverywhere/channels
-            print('====',URL.split("https://www.youtube.com/@"))
-            cid=URL.split("@")[1]
+            # https://www.youtube.com/@KeywordsEverywhere/channels
+            print("====", URL.split("https://www.youtube.com/@"))
+            cid = URL.split("@")[1]
 
-            print("after replace---\n",cid)    
-            cid=cid.split("/")[0]
+            print("after replace---\n", cid)
+            cid = cid.split("/")[0]
 
             # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
             if cid.endswith("/"):
-                cid=cid.replace('/','')       
-            URL ="https://www.youtube.com/@"+cid            
-        print("start processing---\n",URL)    
+                cid = cid.replace("/", "")
+            URL = "https://www.youtube.com/@" + cid
+        print("start processing---\n", URL)
         return cid
     else:
         ydl_opts = {
-            'verbose': True,
-
-        }        
-         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-
+            "verbose": True,
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             try:
-                info = ydl.extract_info(URL, download=False)  
-                channel_id=info['channel_id']
+                info = ydl.extract_info(URL, download=False)
+                channel_id = info["channel_id"]
                 return channel_id
             except:
                 return None
         return None
-def downloadvideosfromfreshchannel(URL, isDownloadVideo,videodir,Height,isSubtitle:bool=False,isComments:bool=False,isAudioOnly:bool=False):
-    # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
-    print('your preferred is :',isDownloadVideo,isSubtitle,isComments,isAudioOnly)
 
+
+def downloadvideosfromfreshchannel(
+    URL,
+    isDownloadVideo,
+    videodir,
+    Height,
+    isSubtitle: bool = False,
+    isComments: bool = False,
+    isAudioOnly: bool = False,
+):
+    # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
+    print("your preferred is :", isDownloadVideo, isSubtitle, isComments, isAudioOnly)
 
     if isAudioOnly:
-        if not os.path.exists(videodir+'/'+'audio'):
-        
-            os.mkdir(videodir+'/'+'audio')
+        if not os.path.exists(videodir + "/" + "audio"):
+            os.mkdir(videodir + "/" + "audio")
 
         ydl_opts = {
-            'outtmpl': videodir+'/audio/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
-#             'extract_audio': True,
-            'verbose': True,
-
-            'format': 'bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }]
+            "outtmpl": videodir + "/audio/" + "%(title).200B%(title.201B&…|)s.%(ext)s",
+            #             'extract_audio': True,
+            "verbose": True,
+            "format": "bestaudio/best",
+            "postprocessors": [
+                {
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "mp3",
+                    "preferredquality": "192",
+                }
+            ],
         }
-        isDownloadVideo=True
+        isDownloadVideo = True
     else:
-        ytp_format='bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best'.format(Height,Height)
-        
-        ydl_opts = {
-            'outtmpl': videodir+'/'+'%(title).200B%(title.201B&…|)s.%(ext)s',
-            'format': ytp_format,
-            # 'proxy': 'socks5://127.0.0.1:1080'
-            'verbose': True,
+        ytp_format = "bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best".format(
+            Height, Height
+        )
 
+        ydl_opts = {
+            "outtmpl": videodir + "/" + "%(title).200B%(title.201B&…|)s.%(ext)s",
+            "format": ytp_format,
+            # 'proxy': 'socks5://127.0.0.1:1080'
+            "verbose": True,
         }
         # python object to be appended
-        y = {        
-            'writesubtitles': isSubtitle, 
-            'writeautomaticsub': isSubtitle,
-            "subtitleslangs": ["all", "-live_chat"],        
-            'getcomments': isComments,
-            'writeinfojson': isComments,}
+        y = {
+            "writesubtitles": isSubtitle,
+            "writeautomaticsub": isSubtitle,
+            "subtitleslangs": ["all", "-live_chat"],
+            "getcomments": isComments,
+            "writeinfojson": isComments,
+        }
 
-
-        ydl_opts =  ydl_opts | y
-    print('whether download video:',isDownloadVideo)
-    print('whether download subtitle:',isSubtitle)
-    print('whether download comment:',isComments)
-    print('whether download audio:',isAudioOnly)
-    print('your ydl_opts is :',ydl_opts)
+        ydl_opts = ydl_opts | y
+    print("whether download video:", isDownloadVideo)
+    print("whether download subtitle:", isSubtitle)
+    print("whether download comment:", isComments)
+    print("whether download audio:", isAudioOnly)
+    print("your ydl_opts is :", ydl_opts)
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-
         try:
             info = ydl.extract_info(URL, download=isDownloadVideo)
-#             print(json.dumps(ydl.sanitize_info(info)))
-            with open(cid+'.json', 'w', encoding='utf8') as f:
+            #             print(json.dumps(ydl.sanitize_info(info)))
+            with open(cid + ".json", "w", encoding="utf8") as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
-         
+
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
 
 
-def zip_folder(folder_path, output_folder, max_size_mb,zip_file):
+def zip_folder(folder_path, output_folder, max_size_mb, zip_file):
     # Create the output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
 
@@ -151,14 +159,19 @@ def zip_folder(folder_path, output_folder, max_size_mb,zip_file):
                 zip_file.close()
 
                 # Move the current ZIP file to the output folder
-                shutil.move(zip_temp_file, os.path.join(output_folder, f'archive{zip_count}.zip'))
+                shutil.move(
+                    zip_temp_file,
+                    os.path.join(output_folder, f"archive{zip_count}.zip"),
+                )
 
-                print(f"Created 'archive{zip_count}.zip' (size: {os.path.getsize(os.path.join(output_folder, f'archive{zip_count}.zip'))} bytes)")
+                print(
+                    f"Created 'archive{zip_count}.zip' (size: {os.path.getsize(os.path.join(output_folder, f'archive{zip_count}.zip'))} bytes)"
+                )
 
                 # Create a new ZIP archive for the remaining files
                 zip_count += 1
-                zip_temp_file = os.path.join(output_folder, f'temp{zip_count}.zip')
-                zip_file = zipfile.ZipFile(zip_temp_file, 'w', zipfile.ZIP_DEFLATED)
+                zip_temp_file = os.path.join(output_folder, f"temp{zip_count}.zip")
+                zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
 
                 # Delete the original file after adding it to the ZIP archive
                 os.remove(file_path)
@@ -167,44 +180,50 @@ def zip_folder(folder_path, output_folder, max_size_mb,zip_file):
     zip_file.close()
 
     # Move the last ZIP file to the output folder
-    shutil.move(zip_temp_file, os.path.join(output_folder, f'archive{zip_count}.zip'))
+    shutil.move(zip_temp_file, os.path.join(output_folder, f"archive{zip_count}.zip"))
 
-    print(f"Created 'archive{zip_count}.zip' (size: {os.path.getsize(os.path.join(output_folder, f'archive{zip_count}.zip'))} bytes)")
-
-
+    print(
+        f"Created 'archive{zip_count}.zip' (size: {os.path.getsize(os.path.join(output_folder, f'archive{zip_count}.zip'))} bytes)"
+    )
 
 
 cid = get_cid_from_URL(URL)
-folder_path = './result'
+folder_path = "./result"
 
 if not os.path.exists(folder_path):
     os.mkdir(folder_path)
-output_folder = './output'
-if not os.path.exists('output'):
-    os.mkdir('output')    
+output_folder = "./output"
+if not os.path.exists("output"):
+    os.mkdir("output")
 if cid:
+    print("start processing---\n", URL)
+    if not os.path.exists("./result/" + cid):
+        print("prepare dir:", cid)
+        os.mkdir("./result/" + cid)
 
-    print("start processing---\n",URL)    
-    if not os.path.exists("./result/"+cid):
-        print('prepare dir:',cid)
-        os.mkdir("./result/"+cid)
+    print("video download folder ---\n", "./" + cid)
 
-    print("video download folder ---\n",'./'+cid)    
-
-    downloadvideosfromfreshchannel(URL,isDownloadVideo, './result/'+cid,Height,isSubtitle,isComments,isAudioOnly)
+    downloadvideosfromfreshchannel(
+        URL,
+        isDownloadVideo,
+        "./result/" + cid,
+        Height,
+        isSubtitle,
+        isComments,
+        isAudioOnly,
+    )
 
     # Specify the folder path you want to compress
 
     # Specify the maximum size of each RAR file in MB
     max_size_mb = 1500
 
-
     # Create a temporary ZIP file for the first archive
     zip_count = 1
-    zip_temp_file = os.path.join(output_folder, f'temp{zip_count}.zip')
-    zip_file = zipfile.ZipFile(zip_temp_file, 'w', zipfile.ZIP_DEFLATED)
+    zip_temp_file = os.path.join(output_folder, f"temp{zip_count}.zip")
+    zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
 
     # Compress the folder into multiple ZIP archives
-    zip_folder(folder_path, output_folder, max_size_mb,zip_file)
+    zip_folder(folder_path, output_folder, max_size_mb, zip_file)
 else:
-    print('please input a valid url',URL)
+    print("please input a valid url", URL)
