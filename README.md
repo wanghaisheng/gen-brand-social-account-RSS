@@ -25,6 +25,16 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC7_gcs09iThXybpVgjHZ_7g
 
 
 
+## download video and subtitle ,comments  from url 
+
+comment analysis is important 
+
+transcript keywords is important 
+
+
+## download  audio only from url
+
+
 https://user-images.githubusercontent.com/2363295/170819288-fa90b35d-f3b5-4c5c-9f17-4cdc80a680ac.mp4
 
 
