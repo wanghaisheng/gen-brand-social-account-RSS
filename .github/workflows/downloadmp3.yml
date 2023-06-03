@@ -63,12 +63,13 @@ jobs:
 #         git pull
 #         git push -u origin main
       
-    - name: Upload files
-      # arg info: https://github.com/ncipollo/release-action#release-action
-      uses: ncipollo/release-action@v1
+    - name: Release
+      uses: marvinpinto/action-automatic-releases@latest
       with:
-        allowUpdates: true
-        artifacts: "output/*"
-        tag: {{ github.run_id }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: {{ github.run_id }}
+        prerelease: false
+        title: ${{ github.run_id }}
+        files: |
+          output/*             
  
