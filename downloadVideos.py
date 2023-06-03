@@ -138,7 +138,7 @@ def downloadvideosfromfreshchannel(
             print(e)
 
 
-def zip_folder(folder_path, output_folder, max_size_mb, zip_file):
+def zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file):
     # Create the output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
 
@@ -224,6 +224,6 @@ if cid:
     zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
 
     # Compress the folder into multiple ZIP archives
-    zip_folder(folder_path, output_folder, max_size_mb, zip_file)
+    zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file)
 else:
     print("please input a valid url", URL)
