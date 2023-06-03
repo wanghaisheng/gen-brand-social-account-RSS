@@ -68,7 +68,7 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "output/audio/*"
+        artifacts: "output/*"
         tag: ${{ github.run_id }}
         token: ${{ secrets.GITHUB_TOKEN }}
  
