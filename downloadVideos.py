@@ -175,8 +175,13 @@ def zip_folder(folder_path, output_folder, max_size_mb,zip_file):
 
 
 cid = get_cid_from_URL(URL)
-if not os.path.exists('result'):
-    os.mkdir('result')
+folder_path = './result'
+
+if not os.path.exists(folder_path):
+    os.mkdir(folder_path)
+output_folder = './output'
+if not os.path.exists('output'):
+    os.mkdir('output')    
 if cid:
 
     print("start processing---\n",URL)    
@@ -189,12 +194,7 @@ if cid:
     downloadvideosfromfreshchannel(URL,isDownloadVideo, './result/'+cid,Height,isSubtitle,isComments,isAudioOnly)
 
     # Specify the folder path you want to compress
-    folder_path = './result'
 
-    # Specify the output folder for RAR files
-    output_folder = './output'
-    if not os.path.exists('output'):
-        os.mkdir('output')
     # Specify the maximum size of each RAR file in MB
     max_size_mb = 1500
 
