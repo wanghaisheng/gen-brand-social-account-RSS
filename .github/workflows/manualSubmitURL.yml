@@ -56,23 +56,7 @@ jobs:
         downloadVideo: ${{ github.event.inputs.downloadVideo }}        
         downloadVideoHeight: ${{ github.event.inputs.downloadVideoHeight }}        
         downloadComments: ${{ github.event.inputs.downloadComments }}        
-        downloadSubtitles: ${{ github.event.inputs.downloadSubtitles }}        
-        
-#     # 配置git
-#     - name: Config git
-#       run: |
-#         git config --local user.email "ations@github.com"
-#         git config --local user.name "github"
-#         git config --global http.postBuffer 157286400
-        
-#         git remote set-url origin "https://${{ github.actor }}:${{ github.token }}@github.com/${{ github.repository }}"
-#     # 更新仓库
-#     - name: Update repo
-#       run: |
-#         git add .
-#         git commit -m "auto update upwork"
-#         git pull
-#         git push -u origin main
+        downloadSubtitles: ${{ github.event.inputs.downloadSubtitles }}
       - name: Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
