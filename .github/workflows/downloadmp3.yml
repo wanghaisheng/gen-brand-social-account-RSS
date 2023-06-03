@@ -1,5 +1,5 @@
 name: download audio from url，support video url and channel url
-'on':
+on:
   workflow_dispatch:
     inputs:
       URL:
@@ -54,9 +54,8 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
-          automatic_release_tag:
-            '[object Object]': null
+          automatic_release_tag: '${{ github.run_id }}'
           prerelease: false
           title: '${{ github.run_id }}'
           files: |
-            output/*             
+            output/*
