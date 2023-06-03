@@ -69,6 +69,6 @@ jobs:
       with:
         allowUpdates: true
         artifacts: "output/*"
-        tag: ${{ github.event.inputs.URL }}+"-audio"
+        tag: {{ github.run_id }}
         token: ${{ secrets.GITHUB_TOKEN }}
  
