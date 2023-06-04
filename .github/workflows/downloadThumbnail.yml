@@ -36,11 +36,7 @@ jobs:
           python  downloadVideos.py 
         env:
           URL: '${{ github.event.inputs.URL }}'
-          downloadVideo: true
-          downloadVideoHeight: 480
-          downloadComments: false
-          downloadSubtitles: false
-          downloadOnlyAudio: '${{ github.event.inputs.downloadOnlyThumbnail }}'
+          downloadOnlyThumbnail: '${{ github.event.inputs.downloadOnlyThumbnail }}'
       - name: Config git
         run: >
           git config --local user.email "ations@github.com"
