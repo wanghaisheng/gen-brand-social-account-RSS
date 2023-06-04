@@ -1,68 +1,63 @@
-
 name: download videos from url，support video url and channel url
-
-on:
-  # Allows you to run this workflow manually from the Actions tab
+'on':
   workflow_dispatch:
     inputs:
       URL:
-        description: 'YouTube Channel URL'
+        description: YouTube Channel URL
         type: enviroment
         required: true
       downloadVideo:
-        description: 'if download video file'
+        description: if download video file
         type: boolean
         required: true
       downloadSubtitles:
-        description: 'if download video subtitles'
+        description: if download video subtitles
         type: boolean
         required: true
       downloadComments:
-        description: 'if download video comments'
+        description: if download video comments
         type: boolean
         required: true
       downloadVideoHeight:
-        description: 'best or low'
+        description: best or low
         type: choice
         required: true
-        options: 
-        - 480
-        - 720
+        options:
+          - 480
+          - 720
 jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
-    - name: Download ffmpeg for Linux
-
-      run:  |
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Download ffmpeg for Linux
+        run: |
           sudo apt update
           sudo apt install ffmpeg
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update      
-        python -m pip install --upgrade pip
-        pip install -r dev.txt
-    - name: run demo
-      run: |
-        python  downloadVideos.py 
-      env:
-        URL: ${{ github.event.inputs.URL }}        
-        downloadVideo: ${{ github.event.inputs.downloadVideo }}        
-        downloadVideoHeight: ${{ github.event.inputs.downloadVideoHeight }}        
-        downloadComments: ${{ github.event.inputs.downloadComments }}        
-        downloadSubtitles: ${{ github.event.inputs.downloadSubtitles }}
-    - name: Release
-      uses: marvinpinto/action-automatic-releases@latest
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: {{ github.run_id }}
-        prerelease: false
-        title: ${{ github.run_id }}
-        files: |
-          output/*             
+      - name: Install dependencies
+        run: |
+          sudo apt-get update      
+          python -m pip install --upgrade pip
+          pip install -r dev.txt
+      - name: run demo
+        run: |
+          python  downloadVideos.py 
+        env:
+          URL: '${{ github.event.inputs.URL }}'
+          downloadVideo: '${{ github.event.inputs.downloadVideo }}'
+          downloadVideoHeight: '${{ github.event.inputs.downloadVideoHeight }}'
+          downloadComments: '${{ github.event.inputs.downloadComments }}'
+          downloadSubtitles: '${{ github.event.inputs.downloadSubtitles }}'
+      - name: Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: '${{ github.run_id }}'
+          prerelease: false
+          title: '${{ github.run_id }}'
+          files: |
+            output/*             
