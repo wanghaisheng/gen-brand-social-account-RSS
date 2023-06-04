@@ -57,6 +57,9 @@ for transcription extract, audio is more appopriate than video,less sapce,less p
 https://user-images.githubusercontent.com/2363295/170819288-fa90b35d-f3b5-4c5c-9f17-4cdc80a680ac.mp4
 
 
+## download thumbnail only from url
+
+https://www.youtube.com/user/bgfilms/videos
 
 
 # podcast-upload-publish-auto
