@@ -106,10 +106,17 @@ def downloadvideosfromfreshchannel(
         ydl_opts = {
             'format': 'best',
             "outtmpl": videodir + "/thumbnail/" + "%(title).200B%(title.201B&…|)s.%(ext)s",
-            'write-all-thumbnails ': True,
-            'skip_download': True,  # Skip downloading the actual video
-            'write_thumbnail': True,  # Write the thumbnail to disk
-            
+             'quiet': True,
+             'no_warnings': True,
+             # 'external_downloader': 'aria2c',
+             # 'external_downloader_args': ['-x', '16', '-s', '16', '-j', '16', '-k', '1M'],
+             'writethumbnail': True,
+            'postprocessors': [{
+                'format': 'jpg',
+                'key': 'FFmpegThumbnailsConvertor',
+                'when': 'before_dl'
+            }],
+             'skip_download': True
         }        
         
         isDownloadVideo = True
