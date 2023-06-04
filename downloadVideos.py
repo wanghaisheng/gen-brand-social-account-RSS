@@ -107,8 +107,12 @@ def downloadvideosfromfreshchannel(
             'format': 'best',
             "outtmpl": videodir + "/thumbnail/" + "%(title).200B%(title.201B&…|)s.%(ext)s",
             'write-all-thumbnails ': True,
+            'skip_download': True,  # Skip downloading the actual video
+            'write_thumbnail': True,  # Write the thumbnail to disk
+            
         }        
-        isDownloadVideo = False
+        
+        isDownloadVideo = True
         if not os.path.exists(videodir + "/" + "thumbnail"):
             os.mkdir(videodir + "/" + "thumbnail")        
         print('we only want to download thumbnail')
