@@ -115,7 +115,7 @@ def downloadvideosfromfreshchannel(
             'forcethumbnail': True,
         }        
         isDownloadVideo = False
-        
+        print('we only want to download thumbnail')
     else:
         ytp_format = "bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best".format(
             Height, Height
