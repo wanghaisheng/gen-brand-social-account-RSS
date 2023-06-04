@@ -12,6 +12,7 @@ isDownloadVideo = os.getenv("downloadVideo")
 isSubtitle = os.getenv("downloadSubtitles")
 isComments = os.getenv("downloadComments")
 isAudioOnly = os.getenv("downloadOnlyAudio")
+isThumbnailOnly=os.getenv("downloadOnlyThumbnail")
 
 
 def get_cid_from_URL(URL):
@@ -78,6 +79,7 @@ def downloadvideosfromfreshchannel(
     isSubtitle: bool = False,
     isComments: bool = False,
     isAudioOnly: bool = False,
+    isThumbnailOnly:bool=False,
 ):
     # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
     print("your preferred is :", isDownloadVideo, isSubtitle, isComments, isAudioOnly)
@@ -100,6 +102,18 @@ def downloadvideosfromfreshchannel(
             ],
         }
         isDownloadVideo = True
+    elif isThumbnailOnly:
+        ydl_opts = {
+            'format': 'best',
+            "outtmpl": videodir + "/thumbnail/" + "%(title).200B%(title.201B&…|)s.%(ext)s",
+            'writesubtitles': False,
+            'writeinfojson': False,
+            'nooverwrites': True,
+            'nopart': True,
+            'skip_download': True,
+            'quiet': True,
+            'forcethumbnail': True,
+        }        
     else:
         ytp_format = "bestvideo[height<={}][ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<={}][ext=mp4][vcodec^=avc1]/best[ext=mp4]/best".format(
             Height, Height
@@ -211,6 +225,7 @@ if cid:
         isSubtitle,
         isComments,
         isAudioOnly,
+        isThumbnailOnly
     )
 
     # Specify the folder path you want to compress
