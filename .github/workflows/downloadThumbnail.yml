@@ -1,0 +1,62 @@
+name: download thumbnail from url，support video url and channel url
+on:
+  workflow_dispatch:
+    inputs:
+      URL:
+        description: YouTube Channel URL
+        type: enviroment
+        required: true
+      downloadOnlyThumbnail:
+        description: if download thumbnail only
+        type: boolean
+        required: true
+        default: True
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Download ffmpeg for Linux
+        run: |
+          sudo apt update
+          sudo apt install ffmpeg
+      - name: Install dependencies
+        run: |
+          sudo apt-get update      
+          python -m pip install --upgrade pip
+          pip install -r dev.txt
+      - name: run demo
+        run: |
+          python  downloadVideos.py 
+        env:
+          URL: '${{ github.event.inputs.URL }}'
+          downloadVideo: true
+          downloadVideoHeight: 480
+          downloadComments: false
+          downloadSubtitles: false
+          downloadOnlyAudio: '${{ github.event.inputs.downloadOnlyThumbnail }}'
+      - name: Config git
+        run: >
+          git config --local user.email "ations@github.com"
+
+          git config --local user.name "github"
+
+          git config --global http.postBuffer 157286400
+
+          git remote set-url origin "https://${{ github.actor }}:${{
+          github.token }}@github.com/${{ github.repository }}"
+      - name: Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: '${{ github.run_id }}'
+          prerelease: false
+          title: '${{ github.run_id }}'
+          files: |
+            output/*
