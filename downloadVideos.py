@@ -106,13 +106,7 @@ def downloadvideosfromfreshchannel(
         ydl_opts = {
             'format': 'best',
             "outtmpl": videodir + "/thumbnail/" + "%(title).200B%(title.201B&…|)s.%(ext)s",
-            'writesubtitles': False,
-            'writeinfojson': False,
-            'nooverwrites': True,
-            'nopart': True,
-            'skip_download': True,
-            'quiet': True,
-            'forcethumbnail': True,
+            'write-all-thumbnails ': True,
         }        
         isDownloadVideo = False
         print('we only want to download thumbnail')
