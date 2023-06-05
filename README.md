@@ -19,6 +19,7 @@ https://www.owenyoung.com/blog/jsonbin/
 
 ## monitor channel video changes 
 
+youtube feed give us 15 entry in the feed xml,if check duration is longer,we may miss the new video
 
 
 ### get rss url from youtube  url 
