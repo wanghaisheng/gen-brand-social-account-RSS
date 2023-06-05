@@ -2,6 +2,7 @@
 
 ## 使用json存储
 * 每一个videoid对应的channel id
+* channel id对应的video list
 * 对应的rss地址
   * youtube 频道rss是现成的
   * youtube trending也是现成的
