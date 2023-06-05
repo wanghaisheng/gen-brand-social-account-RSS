@@ -13,7 +13,11 @@ isSubtitle = os.getenv("downloadSubtitles")
 isComments = os.getenv("downloadComments")
 isAudioOnly = os.getenv("downloadOnlyAudio")
 isThumbnailOnly=os.getenv("downloadOnlyThumbnail")
-
+_youtubeRESERVED_NAMES = (
+    r'channel|c|user|playlist|watch|w|v|embed|e|live|watch_popup|clip|'
+    r'shorts|movies|results|search|shared|hashtag|trending|explore|feed|feeds|'
+    r'browse|oembed|get_video_info|iframe_api|s/player|source|'
+    r'storefront|oops|index|account|t/terms|about|upload|signin|logout')
 
 def get_cid_from_URL(URL):
     # regular channel url  pattern
