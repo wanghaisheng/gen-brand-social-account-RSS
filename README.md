@@ -1,5 +1,13 @@
 # monitor brand social account posts using RSS
 
+## 使用json存储
+* 每一个videoid对应的channel id
+* 对应的rss地址
+  * youtube 频道rss是现成的
+  * youtube trending也是现成的
+  * youtube 关键词搜索？？  
+* 
+https://www.owenyoung.com/blog/jsonbin/
 
 ## supported sites
 
