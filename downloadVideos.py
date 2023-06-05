@@ -18,6 +18,7 @@ _youtubeRESERVED_NAMES = (
     r'shorts|movies|results|search|shared|hashtag|trending|explore|feed|feeds|'
     r'browse|oembed|get_video_info|iframe_api|s/player|source|'
     r'storefront|oops|index|account|t/terms|about|upload|signin|logout')
+_PLAYLIST_ID_RE = r'(?:(?:PL|LL|EC|UU|FL|RD|UL|TL|PU|OLAK5uy_)[0-9A-Za-z-_]{10,}|RDMM|WL|LL|LM)'
 
 def get_cid_from_URL(URL):
     # regular channel url  pattern
