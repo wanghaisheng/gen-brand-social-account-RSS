@@ -23,4 +23,17 @@ Now that you have the channel ID and the default feed address, you can combine t
 create youtube search result RSS feed
 
 https://gist.github.com/JuniorJPDJ/aa26d4c61bc1e78af039e9a17bc17907
+
+
+
+
+all the above is based on the youtube api,such as :
+```
+https://www.youtube.com/feeds/videos.xml?channel_id=...
+```
+
+but 
+>In addition to the ?channel_id= parameter, there's also ?user= and ?playlist_id= with their values being the same as for /user/ and /playlist?list= URLs.
+
+It's worth noting that only 15 videos are included in the feed, which may not be what the user expects. As with the previous case involving bare /channel/-URLs, a redirect to the equivalent non-feed URL - or at least a warning, may be in order.
  
