@@ -1,5 +1,13 @@
 # monitor brand social account posts using RSS
 
+
+
+## tiktok rss database
+
+https://github.com/feeddd/feeds
+
+
+
 ## 使用json存储
 * 每一个videoid对应的channel id
 * channel id对应的video list
