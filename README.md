@@ -1,8 +1,8 @@
-# monitor brand social account posts using RSS
+# best tool to monitor brand social account posts is  RSS
 
 
 
-## tiktok rss database
+## tiktok rss hub
 
 https://github.com/feeddd/feeds
 
