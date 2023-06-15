@@ -50,12 +50,32 @@ jobs:
 
           git remote set-url origin "https://${{ github.actor }}:${{
           github.token }}@github.com/${{ github.repository }}"
-      - name: Release
-        uses: marvinpinto/action-automatic-releases@latest
+#       - name: Release
+#         uses: marvinpinto/action-automatic-releases@latest
+#         with:
+#           repo_token: '${{ secrets.GITHUB_TOKEN }}'
+#           automatic_release_tag: '${{ github.run_id }}'
+#           prerelease: false
+#           title: '${{ github.run_id }}'
+#           files: |
+#             output/*
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: '${{ secrets.GITHUB_TOKEN }}'
-          automatic_release_tag: '${{ github.run_id }}'
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
           prerelease: false
-          title: '${{ github.run_id }}'
-          files: |
-            output/*
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./output/
+          asset_name: result.zip
+          asset_content_type: application/zip
