@@ -8,7 +8,6 @@ import pandas
 
 URL = os.getenv('URL')
 Keywords = os.getenv('Keywords')
-Keywords =[ if len(k)<for k in keywords] 
 
 url_cid_mapping_list=[]        
 def remove_special_elements(lst):
