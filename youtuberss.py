@@ -273,6 +273,7 @@ def genrssfromchannel(url):
         return channel_id+'.xml'
 if Keywords:
     Keywords=remove_special_elements(Keywords)
+    print(f"queries:{Keywords}")
     rssurl=keywords2RssURL(Keywords,'default')
 else:
     rssurl = url2rssURL(URL)
