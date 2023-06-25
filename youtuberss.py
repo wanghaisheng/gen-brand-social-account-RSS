@@ -8,8 +8,12 @@ import pandas
 
 URL = os.getenv('URL')
 Keywords = os.getenv('Keywords')
+Keywords =[ if len(k)<for k in keywords] 
 
 url_cid_mapping_list=[]        
+def remove_special_elements(lst):
+    special_chars = "!@#$%^&*()-_=+[]{}|:;,.<>/?'""
+    return [elem for elem in lst if not all(char in special_chars for char in elem) or not elem.isalpha()]
 
 if os.path.exists("youtube-url-cid-mappings.csv")==False:
     
@@ -267,6 +271,7 @@ def genrssfromchannel(url):
         fg.rss_file(channel_id+'.xml')
         return channel_id+'.xml'
 if Keywords:
+    Keywords=remove_special_elements(Keywords)
     rssurl=keywords2RssURL(Keywords,'default')
 else:
     rssurl = url2rssURL(URL)
