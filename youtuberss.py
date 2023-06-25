@@ -7,6 +7,8 @@ import os
 import pandas
 
 URL = os.getenv('URL')
+Keywords = os.getenv('Keywords')
+
 url_cid_mapping_list=[]        
 
 if os.path.exists("youtube-url-cid-mappings.csv")==False:
@@ -264,5 +266,8 @@ def genrssfromchannel(url):
             fg.description('xxxx')
         fg.rss_file(channel_id+'.xml')
         return channel_id+'.xml'
-rssurl = url2rssURL(URL)
+if Keywords:
+    rssurl=keywords2RssURL(Keywords,'default')
+else:
+    rssurl = url2rssURL(URL)
 print('we found rss url is :',rssurl)
