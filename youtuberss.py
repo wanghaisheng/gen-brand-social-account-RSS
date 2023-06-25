@@ -86,6 +86,7 @@ def keywords2RssURL(queries,feedname):
                 r = ydl.extract_info("ytsearchdateall:{}".format(query), download=False)
                 results += r['entries']    
                 description =search_base+query.replace(' ',"+")+'\n\r'
+            print('===',results)                
             with open(feedname+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(results)))
             print('1')
@@ -142,7 +143,12 @@ def keywords2RssURL(queries,feedname):
             print(e)
 
             fg.title('xxxx')
-            fg.link(href=URL)
+            for idx,query in enumerate(queries):
+            
+                if idx==0:
+                    fg.link(href='https://www.youtube.com/results?search_query='+queries[0].replace(' ',"+"), rel='self')
+                else:
+                    fg.link(href='https://www.youtube.com/results?search_query='+queries[idx].replace(' ',"+"), rel='alternate')            
             fg.description('xxxx')
             fg.rss_file(feedname+'.xml')
     return feedname+'.xml'
