@@ -95,6 +95,7 @@ def keywords2RssURL(queries,feedname):
                 fg.link(href='https://www.youtube.com/results?search_query='+queries[0].replace(' ',"+"), rel='self')
             else:
                 fg.link(href='https://www.youtube.com/results?search_query='+queries[idx].replace(' ',"+"), rel='alternate')
+            print("=====",fg.link)
             fg.description(description)
             fg.podcast.itunes_author = 'auto generated'
             fg.podcast.itunes_block = 'yes'
