@@ -82,7 +82,7 @@ def keywords2RssURL(queries,feedname):
             search_base='https://www.youtube.com/results?search_query='
             # https://www.youtube.com/results?search_query=hammersmith+infant+neurological+examination+(hine)       
             
-            for query in queries:
+            for idx,query in enumerate(queries):
                 r = ydl.extract_info("ytsearchdateall:{}".format(query), download=False)
                 results += r['entries']    
                 description =search_base+query.replace(' ',"+")+'\n\r'
@@ -91,9 +91,10 @@ def keywords2RssURL(queries,feedname):
             fg.load_extension('podcast')    
                 
             fg.title('search results for '+' '.join(queries))
-            if len(queries)==1:
-                fg.link(href='https://www.youtube.com/results?search_query='+queries[0].replace(' ',"+"))
-            
+            if idx==0:
+                fg.link(href='https://www.youtube.com/results?search_query='+queries[0].replace(' ',"+"), rel='self')
+            else:
+                fg.link(href='https://www.youtube.com/results?search_query='+queries[idx].replace(' ',"+"), rel='alternate')
             fg.description(description)
             fg.podcast.itunes_author = 'auto generated'
             fg.podcast.itunes_block = 'yes'
