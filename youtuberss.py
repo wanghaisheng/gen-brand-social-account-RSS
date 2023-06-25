@@ -88,9 +88,13 @@ def keywords2RssURL(queries,feedname):
                 description =search_base+query.replace(' ',"+")+'\n\r'
             with open(feedname+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(results)))
+            print('1')
             fg.load_extension('podcast')    
+            print('2')
                 
             fg.title('search results for '+' '.join(queries))
+            print('3')
+            
             if idx==0:
                 fg.link(href='https://www.youtube.com/results?search_query='+queries[0].replace(' ',"+"), rel='self')
             else:
