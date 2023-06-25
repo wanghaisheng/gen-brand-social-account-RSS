@@ -8,7 +8,10 @@ import pandas
 
 URL = os.getenv('URL')
 Keywords = os.getenv('Keywords')
-
+if ',' in Keywords:
+    Keywords=Keywords.split(",")
+else:
+    Keywords=[Keywords]
 url_cid_mapping_list=[]        
 def remove_special_elements(lst):
     special_chars = "!@#$%^&*()-_=+[]{}|:;,.<>/?'\""
