@@ -135,14 +135,16 @@ def keywords2RssURL(queries,feedname):
                     fe.itunes_episode = None
                     fe.itunes_title = entry['fulltitle']
                     fe.itunes_episode_type = None
-            fg.rss_str(pretty=True)                
+            fg.rss_str(pretty=True)         
+            fg.rss_file(feedname+'.xml')
+            
         except Exception as e:  # skipcq: PYL-W0703
             print(e)
 
             fg.title('xxxx')
             fg.link(href=URL)
             fg.description('xxxx')
-        fg.rss_file(feedname+'.xml')
+            fg.rss_file(feedname+'.xml')
     return feedname+'.xml'
 
 def url2rssURL(URL):
