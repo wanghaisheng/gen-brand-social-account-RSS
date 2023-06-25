@@ -40,6 +40,7 @@ def get_cid_from_URL(URL):
             # cid = 'UCBSQxFi6a8Ju2v_hgiM78Ew'
             if cid.endswith("/"):
                 cid=cid.replace('/','')
+        
 
         else:
             #https://www.youtube.com/@KeywordsEverywhere/channels
@@ -57,6 +58,77 @@ def get_cid_from_URL(URL):
         return cid
     else:
         return None
+def keywords2RssURL(queries,feedname):
+    # Starting the list where we will store the collected data:
+    results = []
+    
+    fg = FeedGenerator()
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+
+        try:
+            # Collecting data for each query:
+            description=None
+            search_base='https://www.youtube.com/results?search_query='
+            # https://www.youtube.com/results?search_query=hammersmith+infant+neurological+examination+(hine)       
+            
+            for query in queries:
+                r = ydl.extract_info("ytsearchdateall:{}".format(query), download=False)
+                results += r['entries']    
+                description =search_base++query.replace(' ',"+"))+'\n\r'
+            print(json.dumps(ydl.sanitize_info(info)))
+            with open(feedname+'.json', 'w', encoding='utf8') as f:
+                f.write(json.dumps(ydl.sanitize_info(info)))
+            fg.load_extension('podcast')    
+                
+            fg.title('search results for '+' '.join(queries))
+            if len(queries)==1:
+                fg.link(href='https://www.youtube.com/results?search_query='+queries[0].replace(' ',"+"))
+            
+            fg.description(description)
+            fg.podcast.itunes_author = 'auto generated'
+            fg.podcast.itunes_block = 'yes'
+            fg.podcast.itunes_image = None
+            fg.podcast.itunes_explicit = 'no'
+            fg.podcast.itunes_complete = None
+            fg.podcast.itunes_new_feed_url = None
+            fg.podcast.itunes_owner = None
+            fg.podcast.itunes_subtitle = "search results"
+            fg.podcast.itunes_summary = None
+            fg.podcast.itunes_category=None
+            # fg.podcast.channel_title(info['channel'])
+            for info in results:
+            
+                for idx,entry in enumerate(info['entries']):
+                    fe = fg.add_entry()
+                    fe.id(entry['id'])
+                    fe.title(entry['title'])
+                    fe.link(href=entry['webpage_url'])
+                    fe.description(entry['description'])
+                    fe.enclosure(yourowndomain+entry['id']+'.mp4', 0, 'video/mp4')
+    
+                    fe.itunes_author = entry['uploader']
+                    fe.itunes_block = None
+                    fe.itunes_image = entry['thumbnail']
+                    fe.itunes_duration = entry['duration']
+                    fe.itunes_explicit = 'no'
+                #     fe.itunes_is_closed_captioned = None
+                    fe.itunes_order = str(idx)
+                    fe.itunes_subtitle = entry['title']
+                    fe.itunes_summary = '<![CDATA[{}]]'.format(entry['description'])
+                    fe.itunes_season = None
+                    fe.itunes_episode = None
+                    fe.itunes_title = entry['fulltitle']
+                    fe.itunes_episode_type = None
+            fg.rss_str(pretty=True)                
+        except Exception as e:  # skipcq: PYL-W0703
+            print(e)
+
+            fg.title('xxxx')
+            fg.link(href=URL)
+            fg.description('xxxx')
+        fg.rss_file(feedname+'.xml')
+    return feedname+'.xml'
+
 def url2rssURL(URL):
     if  "youtube.com" in URL:
         
@@ -70,6 +142,14 @@ def url2rssURL(URL):
             if channel_id.endswith("/"):
                 channel_id=channel_id.replace('/','')
             return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
+        elif URL.startswith('https://www.youtube.com/results?search_query='):
+# https://www.youtube.com/results?search_query=hammersmith+infant+neurological+examination+(hine)       
+            queries=URL.split('https://www.youtube.com/results?search_query=')[-1]
+            feedname=queries
+            queries=q.replace('+'," ") for q in queries.split('+or+')
+            rssurl=keywords2RssURL(queries,feedname)  
+            return rssurl        
+            
         else:
 
             # ℹ️ See help(yt_dlp.YoutubeDL) for a list of available options and public functions
@@ -118,6 +198,7 @@ def url2rssURL(URL):
                 print(e)
 
                 return None      
+
 def channel_id2rssurl(channel_id):
     return "https://www.youtube.com/feeds/videos.xml?channel_id="+channel_id
 def genrssfromchannel(url):
