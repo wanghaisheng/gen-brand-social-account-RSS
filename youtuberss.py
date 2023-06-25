@@ -76,7 +76,7 @@ def keywords2RssURL(queries,feedname):
             for query in queries:
                 r = ydl.extract_info("ytsearchdateall:{}".format(query), download=False)
                 results += r['entries']    
-                description =search_base++query.replace(' ',"+")+'\n\r'
+                description =search_base+query.replace(' ',"+")+'\n\r'
             print(json.dumps(ydl.sanitize_info(info)))
             with open(feedname+'.json', 'w', encoding='utf8') as f:
                 f.write(json.dumps(ydl.sanitize_info(info)))
