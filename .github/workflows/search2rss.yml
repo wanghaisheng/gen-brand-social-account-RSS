@@ -8,11 +8,11 @@ on:
       URL:
         description: 'YouTube search URL like "https://www.youtube.com/results?search_query=hammersmith+infant+neurological+examination+or+hnne"'
         type: enviroment
-        required: true
+        required: False
       Keywords:
         description: 'YouTube seach Keywords list,hine,hnne'
         type: enviroment
-        required: true
+        required: False
 jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
