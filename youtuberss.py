@@ -149,6 +149,7 @@ def url2rssURL(URL):
             queries=URL.split('https://www.youtube.com/results?search_query=')[-1]
             feedname=queries
             queries=[q.replace('+'," ") for q in queries.split('+or+')]
+            print('grab keywords from search url',queries)
             rssurl=keywords2RssURL(queries,feedname)  
             return rssurl        
             
