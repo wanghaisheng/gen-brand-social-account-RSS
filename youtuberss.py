@@ -14,7 +14,8 @@ def remove_special_elements(lst):
     special_chars = "!@#$%^&*()-_=+[]{}|:;,.<>/?'\""
 
     lst= [elem for elem in lst if not all(char in special_chars for char in elem) or not elem.isalpha()]
-    return [elem.strip(''.join(special_chars)) for elem in lst]
+
+    return [elem.strip(''.join(list(special_chars))) for elem in lst]
 if os.path.exists("youtube-url-cid-mappings.csv")==False:
     
     with open("youtube-url-cid-mappings.csv", "w") as file:
