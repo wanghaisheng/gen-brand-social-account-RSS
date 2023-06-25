@@ -148,7 +148,7 @@ def url2rssURL(URL):
 # https://www.youtube.com/results?search_query=hammersmith+infant+neurological+examination+(hine)       
             queries=URL.split('https://www.youtube.com/results?search_query=')[-1]
             feedname=queries
-            queries=q.replace('+'," ") for q in queries.split('+or+')
+            queries=[q.replace('+'," ") for q in queries.split('+or+')]
             rssurl=keywords2RssURL(queries,feedname)  
             return rssurl        
             
