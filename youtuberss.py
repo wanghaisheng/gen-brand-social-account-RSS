@@ -74,7 +74,6 @@ def keywords2RssURL(queries,feedname):
     results = []
     ydl_opts = {
                 'verbose': True,
-                "ytsearchdateall:{}".format(query)
             }
     fg = FeedGenerator()
     with yt_dlp.YoutubeDL() as ydl:
