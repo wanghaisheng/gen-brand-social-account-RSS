@@ -72,7 +72,10 @@ def get_cid_from_URL(URL):
 def keywords2RssURL(queries,feedname):
     # Starting the list where we will store the collected data:
     results = []
-    
+    ydl_opts = {
+                'verbose': True,
+                "ytsearchdateall:{}".format(query)
+            }
     fg = FeedGenerator()
     with yt_dlp.YoutubeDL() as ydl:
 
@@ -83,7 +86,9 @@ def keywords2RssURL(queries,feedname):
             # https://www.youtube.com/results?search_query=hammersmith+infant+neurological+examination+(hine)       
             
             for idx,query in enumerate(queries):
-                r = ydl.extract_info("ytsearchdateall:{}".format(query), download=False)
+                # r = ydl.extract_info( "ytsearchdateall:{}".format(query), download=False)
+                r = ydl.extract_info( "ytsearch:{}".format(query), download=False)
+
                 results += r['entries']    
                 description =search_base+query.replace(' ',"+")+'\n\r'
             print('===',results)                
