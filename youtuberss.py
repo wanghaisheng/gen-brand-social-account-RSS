@@ -76,7 +76,7 @@ def keywords2RssURL(queries,feedname):
                 'verbose': True,
             }
     fg = FeedGenerator()
-    with yt_dlp.YoutubeDL() as ydl:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         try:
             # Collecting data for each query:
