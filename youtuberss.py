@@ -73,7 +73,7 @@ def keywords2RssURL(queries,feedname):
     # Starting the list where we will store the collected data:
     results = []
     ydl_opts = {
-                'verbose': True,
+                'verbose': os.getenv('DEBUG'),
             }
     fg = FeedGenerator()
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
