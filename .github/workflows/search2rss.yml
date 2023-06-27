@@ -13,6 +13,10 @@ on:
         description: 'YouTube seach Keywords list,hine,hnne'
         type: enviroment
         required: False
+      DEBUG:
+        description: 'YouTube seach Keywords list,hine,hnne'
+        type: bool
+        required: False
 jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
@@ -39,6 +43,8 @@ jobs:
       env:
         URL: ${{ github.event.inputs.URL }}        
         Keywords: ${{ github.event.inputs.Keywords }}        
+        DEBUG: ${{ github.event.inputs.DEBUG }}        
+
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Apply php-cs-fixer changes
