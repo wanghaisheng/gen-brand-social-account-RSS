@@ -15,8 +15,11 @@ on:
         required: False
       DEBUG:
         description: 'YouTube seach Keywords list,hine,hnne'
-        type: bool
-        required: False
+        type: choice
+        required: true
+        options:
+          - True
+          - False
 jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
