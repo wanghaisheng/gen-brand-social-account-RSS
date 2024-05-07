@@ -164,7 +164,55 @@ def downloadvideosfromfreshchannel(
             print(e)
 
 
-def zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file,zip_count):
+def zip_folder(folder_path, output_folder, max_size_mb, zip_file, zip_temp_file, zip_count):
+    # Create the output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
+
+    # Convert the maximum size from MB to bytes
+    max_size_bytes = max_size_mb * 1024 * 1024
+
+    # Initialize the size of the current zip file
+    current_zip_size = 0
+
+    # Iterate over the directory tree
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+
+            # Check if adding the next file would exceed the maximum size
+            if current_zip_size + os.path.getsize(file_path) > max_size_bytes:
+                # Close the current ZIP archive
+                zip_file.close()
+
+                # Move the current ZIP file to the output folder
+                final_zip_path = os.path.join(output_folder, f"archive{zip_count}.zip")
+                shutil.move(zip_temp_file, final_zip_path)
+
+                print(f"Created '{final_zip_path}' (size: {os.path.getsize(final_zip_path)} bytes)")
+
+                # Reset the current zip size and create a new ZIP archive
+                current_zip_size = 0
+                zip_count += 1
+                zip_temp_file = os.path.join(output_folder, f"temp{zip_count}.zip")
+                zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
+
+            # Add each file to the current ZIP archive
+            zip_file.write(file_path)
+            # Update the size of the current zip file
+            current_zip_size += os.path.getsize(file_path)
+
+    # Close the last ZIP archive after all files have been added
+    zip_file.close()
+
+    # Move the last ZIP file to the output folder
+    final_zip_path = os.path.join(output_folder, f"archive{zip_count}.zip")
+    shutil.move(zip_temp_file, final_zip_path)
+
+    print(f"Created '{final_zip_path}' (size: {os.path.getsize(final_zip_path)} bytes)")
+
+# Example usage:
+# zip_folder('/path/to/folder', '/path/to/output', 100, None, None, 0)
+def zip_folder_old(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file,zip_count):
     # Create the output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
 
