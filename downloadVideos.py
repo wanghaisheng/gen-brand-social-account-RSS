@@ -82,7 +82,7 @@ def get_cid_from_URL(URL):
 
 def downloadvideosfromfreshchannel(
     URL,
-    isDownloadVideo,
+    isDownloadVideo: bool=False,
     videodir,
     Height,
     isSubtitle: bool = False,
