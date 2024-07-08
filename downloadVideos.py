@@ -8,7 +8,11 @@ import zipfile
 
 URL = os.getenv("URL")
 Height = os.getenv("downloadVideoHeight")
-isDownloadVideo = os.getenv("downloadVideo")
+isDownloadVideo=False
+try:
+    isDownloadVideo = os.getenv("downloadVideo")
+except:
+    pass
 isSubtitle = os.getenv("downloadSubtitles")
 isComments = os.getenv("downloadComments")
 isAudioOnly = os.getenv("downloadOnlyAudio")
