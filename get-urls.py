@@ -103,14 +103,15 @@ def zip_folder(folder_path, output_folder, max_size_mb, zip_file, zip_temp_file,
 
     print(f"Created '{final_zip_path}' (size: {os.path.getsize(final_zip_path)} bytes)")
 async def main():
+    r=await getdata()
 
 
     max_size_mb = 1500
     zip_count = 1
-    zip_temp_file = os.path.join(output_folder, f"temp{zip_count}.zip")
-    zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
-    r=await getdata()
     if r:
+  
+      zip_temp_file = os.path.join(output_folder, f"temp{zip_count}.zip")
+      zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
       zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file,zip_count)
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
