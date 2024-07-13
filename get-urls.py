@@ -23,32 +23,33 @@ headers = {'Referer': 'https://web.archive.org/',
                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                              'Chrome/92.0.4515.107 Safari/537.36'}
 # initialize an AIOHTTP client with the SOCKS proxy connector
-async with aiohttp.ClientSession(connector=None) as session:
+async def getdata():
+    async with aiohttp.ClientSession(connector=None) as session:
     # Perform your web requests using the session
-    try:
-        resp=await session.get(query_url,
+        try:
+            resp=await session.get(query_url,
                                headers=headers)
-        raw=await resp.text()
-        print(raw)
-        if resp.status != 200:
+            raw=await resp.text()
+            print(raw)
+            if resp.status != 200:
             # Handle different HTTP status codes
             # return 
-            print('not 200')
+                print('not 200')
         # Process the response
-        lines = raw.splitlines()
-        print(len(lines))
-        for line in lines:
-            parts = line.split(' ', 2)
-            timestamp, original_url = parts[0], parts[1]
-            outfile.add_data({'date':timestamp,'url':original_url})
+            lines = raw.splitlines()
+            print(len(lines))
+            for line in lines:
+                parts = line.split(' ', 2)
+                timestamp, original_url = parts[0], parts[1]
+                outfile.add_data({'date':timestamp,'url':original_url})
 
-    except aiohttp.ClientError as e:
-        print(f"Connection error: {e}", 'red')
-    except Exception as e:
-        print(f"Couldn't get list of responses: {e}", 'red')
+        except aiohttp.ClientError as e:
+            print(f"Connection error: {e}", 'red')
+        except Exception as e:
+            print(f"Couldn't get list of responses: {e}", 'red')
         # out.append(Wurl(urls[1], urls[2]))
     # return out
-    outfile.record()
+        outfile.record()
 
 import os
 import shutil
@@ -106,7 +107,7 @@ async def main():
     zip_count = 1
     zip_temp_file = os.path.join(output_folder, f"temp{zip_count}.zip")
     zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
-
+    await getdata()
     zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file,zip_count)
 if __name__ == "__main__":
     main()
