@@ -30,6 +30,8 @@ async def getdata():
     # Perform your web requests using the session
         try:
             resp=await session.get(query_url,
+                                               timeout=300000,
+
                                headers=headers)
             raw=await resp.text()
             print(raw)
