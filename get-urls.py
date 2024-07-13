@@ -1,6 +1,8 @@
 import aiohttp
 import json,os
 from DataRecorder import Recorder
+import asyncio
+
 proxy_url=None
 domain = os.getenv("domain")
 
@@ -110,5 +112,9 @@ async def main():
     await getdata()
     zip_folder(folder_path, output_folder, max_size_mb, zip_file,zip_temp_file,zip_count)
 if __name__ == "__main__":
-    main()
+    loop = asyncio.get_event_loop()
+    try:
+        loop.run_until_complete(main())
+    finally:
+        loop.close()
 
