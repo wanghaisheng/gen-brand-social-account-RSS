@@ -20,7 +20,7 @@ async def geturls(session, domain):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
 
-    query_url = f"http://web.archive.org/cdx/search/cdx?url={subs_wildcard}{domain}/*&fl=timestamp,original"
+    query_url = f"http://web.archive.org/cdx/search/cdx?url={domain}/*&fl=timestamp,original"
     filter="&collapse=urlkey"
     query_url=query_url+filter
     query_url=query_url+'&limit=10'
