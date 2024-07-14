@@ -1,0 +1,33 @@
+name: get urls from  amz
+'on':
+  workflow_dispatch:
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Download ffmpeg for Linux
+        run: |
+          sudo apt update
+          sudo apt install ffmpeg
+      - name: Install dependencies
+        run: |
+          sudo apt-get update      
+          python -m pip install --upgrade pip
+          pip install aiohttp DataRecorder aiohttp_socks
+      - name: run demo
+        run: |
+          python  get-urls-amz.py 
+      - name: Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          automatic_release_tag: '${{ github.run_id }}'
+          prerelease: false
+          title: '${{ github.run_id }}'
+          files: |
+            output/*             
