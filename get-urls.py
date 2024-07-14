@@ -13,7 +13,7 @@ async def geturls(session, domain):
     no_subs = None
     subs_wildcard = "*." if not no_subs else ""
     domainname = domain.replace("https://", "").split('/')[0]
-    csv_file = f'result/waybackmachines-{domainname}.csv'
+    csv_file = './result/waybackmachines-{domainname}.csv'
 
     headers = {
         'Referer': 'https://web.archive.org/',
