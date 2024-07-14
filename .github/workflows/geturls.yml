@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo apt-get update      
           python -m pip install --upgrade pip
-          pip install aiohttp DataRecorder
+          pip install aiohttp DataRecorder aiohttp_socks
       - name: run demo
         run: |
           python  get-urls.py 
