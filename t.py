@@ -22,8 +22,7 @@ async def geturls(domain):
     # subs_wildcard=''
     domainname = domain.replace("https://", "")
     domainname=domainname.split('/')[0]
-    csv_file=f'waybackmachines-{domainname}.csv'
-    outfile=Recorder(f'waybackmachines-{domainname}.csv')
+    csv_file=f'./result/waybackmachines-{domainname}.csv'
 
     query_url = f"http://web.archive.org/cdx/search/cdx?url={subs_wildcard}{domain}/&fl=timestamp,original,mimetype,statuscode,digest"
     query_url = f"http://web.archive.org/cdx/search/cdx?url={domain}/&matchType=prefix&fl=timestamp,original"
@@ -48,7 +47,7 @@ async def geturls(domain):
             resp=await session.get(query_url,
                                 headers=headers,
                 # auth=auth.prepare_request, 
-                proxy='http://127.0.0.1:1080',
+                # proxy='http://127.0.0.1:1080',
                 timeout=300000)     
             count=0
             while True:
@@ -97,5 +96,8 @@ async def geturls(domain):
             print(f"Couldn't get list of responses: {e}", 'red')
             await geturls( domain)
         # return out
-        outfile.record()
+folder_path = "./result"
+
+if os.path.exists(folder_path) == False:
+    os.mkdir(folder_path)
 asyncio.run(geturls(domain))
