@@ -24,6 +24,7 @@ async def geturls(session, domain):
     query_url = f"http://web.archive.org/cdx/search/cdx?url={domain}&fl=timestamp,original&matchType=domain"
     filter="&collapse=urlkey"
     query_url=query_url+filter
+    query_url=query_url+'&matchType=domain'
 
     try:
 
@@ -96,7 +97,7 @@ async def main(domain):
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
             print(f"Connection error on attempt {i+1}: {e}")
             if i < retries - 1:
-                await asyncio.sleep(2**i)  # 指数退避策略
+                await asyncio.sleep(10**i)  # 指数退避策略
             else:
                 print("Max retries reached. Exiting.")
                 return
