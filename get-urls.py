@@ -20,7 +20,10 @@ async def geturls(session, domain):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
 
-    query_url = f"http://web.archive.org/cdx/search/cdx?url={subs_wildcard}{domain}/*&fl=timestamp,original&output=json"
+    query_url = f"http://web.archive.org/cdx/search/cdx?url={subs_wildcard}{domain}/*&fl=timestamp,original"
+    filter="&collapse=urlkey"
+    query_url=query_url+filter
+    query_url=query_url+'&limit=10'
 
     try:
 
@@ -158,6 +161,20 @@ if __name__ == "__main__":
     start_time = time.time()
     asyncio.run(main(domain))
     print(f"Time taken for asynchronous execution: {time.time() - start_time} seconds")
+    import os
+
+# 假设 domainname 变量已经被赋值
+    domainname = domain.replace("https://", "").split('/')[0]
+
+# 构建 CSV 文件的完整路径
+    csv_file_path = f'./result/waybackmachines-{domainname}.csv'
+
+# 检查 CSV 文件是否存在
+    if os.path.exists(csv_file_path):
+        print(f"The file '{csv_file_path}' exists.")
+    else:
+        print(f"The file '{csv_file_path}' does not exist.")
+        return 
     # Specify the maximum size of each RAR file in MB
     max_size_mb = 1500
 
