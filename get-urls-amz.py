@@ -7,6 +7,7 @@ from aiohttp_socks import ProxyType, ProxyConnector
 import shutil
 import zipfile
 proxy_url = 'socks5://127.0.0.1:1080'  # 填写你的代理服务器地址
+proxy_url=None
 domain = 'https://www.amazon.com/sp?'  # 你的域名
 
 async def geturls(session, domain):
