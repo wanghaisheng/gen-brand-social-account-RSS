@@ -23,7 +23,7 @@ async def geturls(session, domain):
     query_url = f"http://web.archive.org/cdx/search/cdx?url={domain}/*&fl=timestamp,original"
     filter="&collapse=urlkey"
     query_url=query_url+filter
-    query_url=query_url+'&limit=10'
+    # query_url=query_url+'&limit=10'
 
     try:
 
