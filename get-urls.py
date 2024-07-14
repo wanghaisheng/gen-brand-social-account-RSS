@@ -8,7 +8,7 @@ import shutil
 import zipfile
 proxy_url = 'socks5://127.0.0.1:1080'  # 填写你的代理服务器地址
 proxy_url=None
-domain = 'https://www.amazon.com/sp?'  # 你的域名
+domain='myshopify.com'
 
 async def geturls(session, domain):
     no_subs = None
@@ -21,15 +21,14 @@ async def geturls(session, domain):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
 
-    query_url = f"http://web.archive.org/cdx/search/cdx?url={subs_wildcard}{domain}/*&fl=timestamp,original"
-    query_url=query_url+'&matchType=prefix'
+    query_url = f"http://web.archive.org/cdx/search/cdx?url={domain}&fl=timestamp,original&matchType=domain"
     filter="&collapse=urlkey"
     query_url=query_url+filter
 
     try:
 
         async with session.get(query_url, headers=headers,
-                                #  proxy='http://127.0.0.1:1080', 
+                                 # proxy='http://127.0.0.1:1080', 
                                 timeout=30000) as resp:
             if resp.status != 200:
                 print(f"Failed to get data, status: {resp.status}")
@@ -41,15 +40,16 @@ async def geturls(session, domain):
             # 使用 iter_any 替代 iter_lines
             # async for chunk in resp.content.iter_any():
             async for chunk in resp.content.iter_chunked(10240):
-
+                lines=[]
                 if isinstance(chunk, str):
                     lines = chunk.splitlines()
                 elif isinstance(chunk, bytes):
                     lines = chunk.decode('utf-8', errors='ignore').splitlines()
                 else:
                     continue
-
+                print(len(lines))
                 for line in lines:
+                    
                     if ' ' in line:
                         try:
                             timestamp, original_url = line.strip().split(' ', 1)
@@ -57,14 +57,15 @@ async def geturls(session, domain):
 
                             with open(csv_file, mode='a', newline='', encoding='utf-8') as f:
                                 writer = csv.DictWriter(f, fieldnames=['date', 'url'])
-                                if not file_exists:
-                                    writer.writeheader()
+                                # if not file_exists:
+                                    # writer.writeheader()
+                                # print('add 1')
                                 writer.writerow(data)
                                 file_exists = True
                             count += 1
                         except Exception as e:
                             print(f"Error processing line: {e}")
-
+                print('till now',count)
             print(f"Total URLs processed: {count}")
 
     except aiohttp.ClientError as e:
@@ -75,8 +76,13 @@ async def geturls(session, domain):
         await geturls(session, domain)
     except asyncio.TimeoutError:
         print("The request timed out")
+        await asyncio.sleep(5)
+        await geturls(session, domain)
+
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+        await asyncio.sleep(5)
+        await geturls(session, domain)
 
 async def main(domain):
     retries = 5
