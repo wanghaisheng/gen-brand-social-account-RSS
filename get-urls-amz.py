@@ -7,6 +7,7 @@ from aiohttp_socks import ProxyType, ProxyConnector
 import shutil
 import zipfile
 proxy_url = 'socks5://127.0.0.1:1080'  # 填写你的代理服务器地址
+proxy_url=None
 domain = 'https://www.amazon.com/sp?'  # 你的域名
 
 async def geturls(domain):
@@ -67,19 +68,25 @@ async def geturls(domain):
                 print(len(lines))
                 count=count+len(lines)
                 file_exists = os.path.isfile(csv_file)
-
                 for line in lines:
+                    
                     if ' ' in line:
-                        # parts = line.split(' ')
-                        # timestamp, original_url = parts[0], parts[1]
-                        # data={'date':timestamp,'url':original_url}
-                        data={'url':line.strip()}
-                        with open(csv_file, mode='a', newline='', encoding='utf-8') as f:
-                            writer = csv.DictWriter(f, fieldnames=fieldnames)
-                            # if not file_exists:
-                                # writer.writeheader()
-                            writer.writerow(data)
-            print('============',count)
+                        try:
+                            timestamp, original_url = line.strip().split(' ', 1)
+                            data = {'date': timestamp, 'url': original_url}
+
+                            with open(csv_file, mode='a', newline='', encoding='utf-8') as f:
+                                writer = csv.DictWriter(f, fieldnames=['date', 'url'])
+                                # if not file_exists:
+                                    # writer.writeheader()
+                                # print('add 1')
+                                writer.writerow(data)
+                                file_exists = True
+                            count += 1
+                        except Exception as e:
+                            print(f"Error processing line: {e}")
+                print('till now',count)
+            print(f"Total URLs processed: {count}")
 
         except aiohttp.ClientError as e:
             print(f"Connection error: {e}", 'red')
