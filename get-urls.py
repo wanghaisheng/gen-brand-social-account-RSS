@@ -172,18 +172,17 @@ if __name__ == "__main__":
 # 检查 CSV 文件是否存在
     if os.path.exists(csv_file_path):
         print(f"The file '{csv_file_path}' exists.")
-    else:
-        print(f"The file '{csv_file_path}' does not exist.")
-        return 
     # Specify the maximum size of each RAR file in MB
-    max_size_mb = 1500
+        max_size_mb = 1500
 
     # Create a temporary ZIP file for the first archive
-    zip_count = 1
-    zip_temp_file = os.path.join(folder_path, f"temp{zip_count}.zip")
-    zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
+        zip_count = 1
+        zip_temp_file = os.path.join(folder_path, f"temp{zip_count}.zip")
+        zip_file = zipfile.ZipFile(zip_temp_file, "w", zipfile.ZIP_DEFLATED)
 
     # Compress the folder into multiple ZIP archives
-    zip_folder(
+        zip_folder(
         folder_path, output_folder, max_size_mb, zip_file, zip_temp_file, zip_count
     )
+    else:
+        print(f"The file '{csv_file_path}' does not exist.")
