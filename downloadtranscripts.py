@@ -18,7 +18,7 @@ def gettransp():
 
       yt = YouTube(f'http://youtube.com/watch?v={id}')
       print(yt.captions)
-      t=yt.captions
-      with open(folder_path+'/'+id + ".txt", "w", encoding="utf8") as f:
-        f.write(t)
+      caption = yt.captions['a.en']
+      caption.save_captions(f"{id}.txt")
+
 gettransp()
