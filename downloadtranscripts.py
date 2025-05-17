@@ -21,7 +21,7 @@ def gettransp():
       yt = YouTube(videourl)
 
       print('srt',yt.captions)
-      if not yt.captions:
+      if not yt.captions=={}:
           caption = yt.captions['a.en']
           caption.save_captions(f"{id}.txt")
       else:
