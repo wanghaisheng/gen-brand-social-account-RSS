@@ -14,9 +14,9 @@ def gettransp():
 
   for video in c.videos:
       print('===',video)
-      id=video.videoId
+      id=video.video_id
 
-      yt = YouTube('http://youtube.com/watch?v=2lAe1cqCOXo')
+      yt = YouTube(f'http://youtube.com/watch?v={id}')
       print(yt.captions)
       t=yt.captions
       with open(folder_path+'/'+id + ".txt", "w", encoding="utf8") as f:
