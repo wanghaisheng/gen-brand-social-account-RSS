@@ -13,6 +13,7 @@ def gettransp():
   print(f'Downloading videos by: {c.channel_name}')
 
   for video in c.videos:
+      print('===',video)
       id=video.videoId
 
       yt = YouTube('http://youtube.com/watch?v=2lAe1cqCOXo')
