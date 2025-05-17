@@ -17,9 +17,13 @@ def gettransp():
       print('===',video)
       id=video.video_id
 
-      yt = YouTube(f'http://youtube.com/watch?v={id}')
-      print('srt',yt.captions)
-      caption = yt.captions['a.en']
-      caption.save_captions(f"{id}.txt")
+      videourl = f'http://youtube.com/watch?v={id}'
+      yt = YouTube(videourl)
 
+      print('srt',yt.captions)
+      if not yt.captions:
+          caption = yt.captions['a.en']
+          caption.save_captions(f"{id}.txt")
+      else:
+          print(f'there is no srt for {videourl}')
 gettransp()
