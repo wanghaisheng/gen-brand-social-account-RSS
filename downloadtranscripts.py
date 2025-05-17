@@ -246,6 +246,9 @@ class YoutubeTranscript:
         return transcript_items, video_title
 
 ytrans=YoutubeTranscript()
+
+
+# https://youtubetotranscript.com/transcript
 def gettransp():
 
   c = Channel(f"https://www.youtube.com/{URL}")
@@ -264,6 +267,9 @@ def gettransp():
           caption.save_captions(f"{id}.txt")
       else:
           print(f'there is no srt for {videourl}')
-          transcript_items,title=ytrans.fetch_transcript(id,'en')
-          print('===',transcript_items)
+          try:
+              transcript_items,title=ytrans.fetch_transcript(id,'en')
+              print('===',transcript_items)
+          except Exception as e:
+              print(f'error :{e}')
 gettransp()
