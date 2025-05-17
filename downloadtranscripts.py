@@ -7,7 +7,7 @@ if not os.path.exists(folder_path):
 
 URL = os.getenv("URL")
 URL=URL.split('.com/')[-1]
-page=setup_chrome()
+browser=setup_chrome()
 import html
 import json
 import re
