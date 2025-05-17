@@ -18,7 +18,7 @@ def gettransp():
       id=video.video_id
 
       yt = YouTube(f'http://youtube.com/watch?v={id}')
-      print(yt.captions)
+      print('srt',yt.captions)
       caption = yt.captions['a.en']
       caption.save_captions(f"{id}.txt")
 
