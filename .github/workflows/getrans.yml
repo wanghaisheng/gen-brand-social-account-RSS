@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo apt-get update      
           python -m pip install --upgrade pip
-          pip install   pytubefix requests
+          pip install   pytubefix requests DrissionPage dotenv
       - name: run demo
         run: |
           python  downloadtranscripts.py 
