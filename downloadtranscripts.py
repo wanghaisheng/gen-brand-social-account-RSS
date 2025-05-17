@@ -6,10 +6,11 @@ if not os.path.exists(folder_path):
     os.mkdir(folder_path)
 
 URL = os.getenv("URL")
+URL=URL.split('.com/')[-1]
 
 def gettransp():
 
-  c = Channel("https://www.youtube.com/@ProgrammingKnowledge")
+  c = Channel(f"https://www.youtube.com/{URL}")
   print(f'Downloading videos by: {c.channel_name}')
 
   for video in c.videos:
