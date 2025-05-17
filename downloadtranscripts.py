@@ -277,7 +277,8 @@ def gettransp():
               tab.ele('@name=youtube_url').input(videourl)
               tab.ele('@class=w-full btn btn-secondary btn-rounded sm:w-auto').click()
               tab.wait.ele_displayed('Copy')
-
+              txt=tab.ele('text=Copy Trans')
+              print('--------',txt)
               
 
           except Exception as e:
