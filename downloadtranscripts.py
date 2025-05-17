@@ -1,12 +1,13 @@
 import os
 from pytubefix import Channel,YouTube
-
+from getbrowser import setup_chrome
 folder_path = "./result"
 if not os.path.exists(folder_path):
     os.mkdir(folder_path)
 
 URL = os.getenv("URL")
 URL=URL.split('.com/')[-1]
+page=setup_chrome()
 import html
 import json
 import re
@@ -248,7 +249,6 @@ class YoutubeTranscript:
 ytrans=YoutubeTranscript()
 
 
-# https://youtubetotranscript.com/transcript
 def gettransp():
 
   c = Channel(f"https://www.youtube.com/{URL}")
@@ -268,8 +268,18 @@ def gettransp():
       else:
           print(f'there is no srt for {videourl}')
           try:
-              transcript_items,title=ytrans.fetch_transcript(id,'en')
-              print('===',transcript_items)
+              # transcript_items,title=ytrans.fetch_transcript(id,'en')
+              # print('===',transcript_items)
+              tab=browser.new_tab()
+              search_url="https://youtubetotranscript.com/transcript"
+
+              tab.get(search_url)              
+              tab.ele('@name=youtube_url').input(videourl)
+              tab.ele('@class=w-full btn btn-secondary btn-rounded sm:w-auto').click()
+              tab.wait.ele_displayed('Copy')
+
+              
+
           except Exception as e:
               print(f'error :{e}')
 gettransp()
